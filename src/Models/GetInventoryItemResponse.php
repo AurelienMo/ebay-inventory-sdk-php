@@ -2,12 +2,16 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the response of the <strong>bulkGetInventoryItem</strong> method
  * to give the status of each inventory item record that the user tried to retrieve.
  */
 class GetInventoryItemResponse implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container will be returned if there were one or more errors
      * associated with retrieving the inventory item record.

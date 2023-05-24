@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\LocaleEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used by the response of the <strong>bulkCreateOrReplaceInventoryItem</strong> method
@@ -11,6 +12,8 @@ use SapientPro\EbayInventorySDK\Enums\LocaleEnum;
  */
 class InventoryItemResponse implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container will be returned if there were one or more errors associated with the creation
      * or update to the inventory item record.

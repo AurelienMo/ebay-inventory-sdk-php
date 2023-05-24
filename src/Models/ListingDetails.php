@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\ListingStatusEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used by the <strong>listing</strong> container in the <strong>getOffer</strong> and
@@ -12,6 +13,8 @@ use SapientPro\EbayInventorySDK\Enums\ListingStatusEnum;
  */
 class ListingDetails implements EbayModelInterface
 {
+    use FillsModel;
+
     /** The unique identifier of the eBay listing that is associated with the published offer. */
     public string $listingId;
 

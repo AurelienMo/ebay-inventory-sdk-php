@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\MarketplaceEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used to display the expected listing fees for each unpublished offer
@@ -10,6 +11,8 @@ use SapientPro\EbayInventorySDK\Enums\MarketplaceEnum;
  */
 class FeeSummary implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container is an array of listing fees that can be expected to be applied to
      * an offer on the specified eBay marketplace (<strong>marketplaceId</strong> value).
@@ -30,5 +33,5 @@ class FeeSummary implements EbayModelInterface
      * when a call is made, and errors and/or warnings occur.
      * @var Error[]
      */
-    public array $warnings;
+    public ?array $warnings;
 }

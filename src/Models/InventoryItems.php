@@ -2,17 +2,21 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the base response payload of <strong>getInventoryItems</strong> call.
  */
 class InventoryItems implements EbayModelInterface
 {
+    use FillsModel;
+
     /** This is the URL to the current page of inventory items. */
     public string $href;
 
     /**
      * This container is an array of one or more inventory items, with detailed information on each inventory item.
-     * @var InventoryItemWithSkuLocaleGroupid[]
+     * @var InventoryItemWithSkuLocaleGroupId[]
      */
     public array $inventoryItems;
 

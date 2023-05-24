@@ -1,47 +1,46 @@
-# EBay\Inventory\OfferApi
+# SapientPro\EbayInventorySDK\Api\OfferApi
 
 All URIs are relative to *https://api.ebay.com/sell/inventory/v1*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**bulkCreateOffer**](OfferApi.md#bulkcreateoffer) | **POST** /bulk_create_offer | 
-[**bulkPublishOffer**](OfferApi.md#bulkpublishoffer) | **POST** /bulk_publish_offer | 
-[**createOffer**](OfferApi.md#createoffer) | **POST** /offer | 
-[**deleteOffer**](OfferApi.md#deleteoffer) | **DELETE** /offer/{offerId} | 
-[**getListingFees**](OfferApi.md#getlistingfees) | **POST** /offer/get_listing_fees | 
-[**getOffer**](OfferApi.md#getoffer) | **GET** /offer/{offerId} | 
-[**getOffers**](OfferApi.md#getoffers) | **GET** /offer | 
-[**publishOffer**](OfferApi.md#publishoffer) | **POST** /offer/{offerId}/publish/ | 
-[**publishOfferByInventoryItemGroup**](OfferApi.md#publishofferbyinventoryitemgroup) | **POST** /offer/publish_by_inventory_item_group/ | 
-[**updateOffer**](OfferApi.md#updateoffer) | **PUT** /offer/{offerId} | 
-[**withdrawOffer**](OfferApi.md#withdrawoffer) | **POST** /offer/{offerId}/withdraw | 
-[**withdrawOfferByInventoryItemGroup**](OfferApi.md#withdrawofferbyinventoryitemgroup) | **POST** /offer/withdraw_by_inventory_item_group | 
+| Method                                                                                 | HTTP request                                     | Description |
+|----------------------------------------------------------------------------------------|--------------------------------------------------|-------------|
+| [**bulkCreateOffer**](OfferApi.md#bulkcreateoffer)                                     | **POST** /bulk_create_offer                      |             |
+| [**bulkPublishOffer**](OfferApi.md#bulkpublishoffer)                                   | **POST** /bulk_publish_offer                     |             |
+| [**createOffer**](OfferApi.md#createoffer)                                             | **POST** /offer                                  |             |
+| [**deleteOffer**](OfferApi.md#deleteoffer)                                             | **DELETE** /offer/{offerId}                      |             |
+| [**getListingFees**](OfferApi.md#getlistingfees)                                       | **POST** /offer/get_listing_fees                 |             |
+| [**getOffer**](OfferApi.md#getoffer)                                                   | **GET** /offer/{offerId}                         |             |
+| [**getOffers**](OfferApi.md#getoffers)                                                 | **GET** /offer                                   |             |
+| [**publishOffer**](OfferApi.md#publishoffer)                                           | **POST** /offer/{offerId}/publish/               |             |
+| [**publishOfferByInventoryItemGroup**](OfferApi.md#publishofferbyinventoryitemgroup)   | **POST** /offer/publish_by_inventory_item_group/ |             |
+| [**updateOffer**](OfferApi.md#updateoffer)                                             | **PUT** /offer/{offerId}                         |             |
+| [**withdrawOffer**](OfferApi.md#withdrawoffer)                                         | **POST** /offer/{offerId}/withdraw               |             |
+| [**withdrawOfferByInventoryItemGroup**](OfferApi.md#withdrawofferbyinventoryitemgroup) | **POST** /offer/withdraw_by_inventory_item_group |             |
 
 # **bulkCreateOffer**
-> \EBay\Inventory\Model\BulkOfferResponse bulkCreateOffer($body)
-
-
+> SapientPro\EbayInventorySDK\Models\BulkOfferResponse bulkCreateOffer($body, $contentLanguage)
 
 This call creates multiple offers (up to 25) for specific inventory items on a specific eBay marketplace. Although it is not a requirement for the seller to create complete offers (with all necessary details) right from the start, eBay recommends that the seller provide all necessary details with this call since there is currently no bulk operation available to update multiple offers with one call. The following fields are always required in the request payload:  <strong>sku</strong>, <strong>marketplaceId</strong>, and (listing) <strong>format</strong>. <br><br>Other information that will be required before a offer can be published are highlighted below: <ul><li>Inventory location</li> <li>Offer price</li> <li>Available quantity</li> <li>eBay listing category</li> <li>Referenced listing policy profiles to set payment, return, and fulfillment values/settings</li> </ul><p><span class=\"tablenote\"><strong>Note:</strong> Though the <strong>includeCatalogProductDetails</strong> parameter is not required to be submitted in the request, the parameter defaults to <code>true</code> if omitted.</span></p> <p>If the call is successful, unique <strong>offerId</strong> values are returned in the response for each successfully created offer. The <strong>offerId</strong> value will be required for many other offer-related calls. Note that this call only stages an offer for publishing. The seller must run either the <strong>publishOffer</strong>, <strong>bulkPublishOffer</strong>, or <strong>publishOfferByInventoryItemGroup</strong> call to convert offer(s) into an active single- or multiple-variation listing.</p> <p>In addition to the <code>authorization</code> header, which is required for all eBay REST API calls, the <strong>bulkCreateOffer</strong> call also requires the <code>Content-Language</code> header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be <code>en-US</code>. To view other supported <code>Content-Language</code> values, and to read more about all supported HTTP headers for eBay REST API calls, see the <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a> topic in the <strong>Using eBay RESTful APIs</strong> document.</p><p>For those who prefer to create a single offer per call, the <strong>createOffer</strong> method can be used instead.</p>
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
+use SapientPro\EbayInventorySDK\Models\BulkEbayOfferDetailsWithKeys;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$body = new \EBay\Inventory\Model\BulkEbayOfferDetailsWithKeys(); // \EBay\Inventory\Model\BulkEbayOfferDetailsWithKeys | Details of the offer for the channel
+$body = BulkEbayOfferDetailsWithKeys::fromArray([
+//
+]);
 
 try {
-    $result = $apiInstance->bulkCreateOffer($body);
+    $result = $apiInstance->bulkCreateOffer($body, LocaleEnum::de_AT);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OfferApi->bulkCreateOffer: ', $e->getMessage(), PHP_EOL;
@@ -51,13 +50,14 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\BulkEbayOfferDetailsWithKeys**](../Model/BulkEbayOfferDetailsWithKeys.md)| Details of the offer for the channel |
+| Name                | Type                                                                                                            | Description                          | Notes |
+|---------------------|-----------------------------------------------------------------------------------------------------------------|--------------------------------------|-------|
+| **body**            | [**SapientPro\EbayInventorySDK\Models\BulkEbayOfferDetailsWithKeys**](../Model/BulkEbayOfferDetailsWithKeys.md) | Details of the offer for the channel |       |
+| **contentLanguage** | [**SapientPro\EbayInventorySDK\Enum\LocaleEnum**](../Enum/LocaleEnum.md)                                        | Language of the content              |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\BulkOfferResponse**](../Model/BulkOfferResponse.md)
+[**SapientPro\EbayInventorySDK\Models\BulkOfferResponse**](../Model/BulkOfferResponse.md)
 
 ### Authorization
 
@@ -71,27 +71,26 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **bulkPublishOffer**
-> \EBay\Inventory\Model\BulkPublishResponse bulkPublishOffer($body)
-
-
+> SapientPro\EbayInventorySDK\Models\BulkPublishResponse bulkPublishOffer($body)
 
 <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br /><br />This call is used to convert unpublished offers (up to 25) into  published offers, or live eBay listings. The unique identifier (<strong>offerId</strong>) of each offer to publlish is passed into the request payload. It is possible that some unpublished offers will be successfully created into eBay listings, but others may fail. The response payload will show the results for each <strong>offerId</strong> value that is passed into the request payload. The <strong>errors</strong> and <strong>warnings</strong> containers will be returned for an offer that had one or more issues being published. <br/><br/>For those who prefer to publish one offer per call, the <strong>publishOffer</strong> method can be used instead. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
+use SapientPro\EbayInventorySDK\Models\BulkOffer;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$body = new \EBay\Inventory\Model\BulkOffer(); // \EBay\Inventory\Model\BulkOffer | The base request of the <strong>bulkPublishOffer</strong> method.
+$body = BulkOffer::fromArray([
+//
+]);
 
 try {
     $result = $apiInstance->bulkPublishOffer($body);
@@ -104,13 +103,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\BulkOffer**](../Model/BulkOffer.md)| The base request of the &lt;strong&gt;bulkPublishOffer&lt;/strong&gt; method. |
+| Name     | Type                                                                      | Description                                                                   | Notes |
+|----------|---------------------------------------------------------------------------|-------------------------------------------------------------------------------|-------|
+| **body** | [**SapientPro\EbayInventorySDK\Models\BulkOffer**](../Model/BulkOffer.md) | The base request of the &lt;strong&gt;bulkPublishOffer&lt;/strong&gt; method. |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\BulkPublishResponse**](../Model/BulkPublishResponse.md)
+[**SapientPro\EbayInventorySDK\Models\BulkPublishResponse**](../Model/BulkPublishResponse.md)
 
 ### Authorization
 
@@ -124,7 +123,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **createOffer**
-> \EBay\Inventory\Model\OfferResponse createOffer($body, $contentLanguage)
+> SapientPro\EbayInventorySDK\Models\OfferResponse createOffer($body, $contentLanguage)
 
 
 
@@ -133,22 +132,23 @@ This call creates an offer for a specific inventory item on a specific eBay mark
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
+use SapientPro\EbayInventorySDK\Models\BulkOffer;
+use SapientPro\EbayInventorySDK\Models\EbayOfferDetailsWithKeys;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$body = new \EBay\Inventory\Model\EbayOfferDetailsWithKeys(); // \EBay\Inventory\Model\EbayOfferDetailsWithKeys | Details of the offer for the channel
-$contentLanguage = "contentLanguage_example"; // string | This request header sets the natural language that will be provided in the field values of the request payload.
+
+$body = EbayOfferDetailsWithKeys::fromArray([]);
+
 
 try {
-    $result = $apiInstance->createOffer($body, $contentLanguage);
+    $result = $apiInstance->createOffer($body, \SapientPro\EbayInventorySDK\Enums\LocaleEnum::en_US);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OfferApi->createOffer: ', $e->getMessage(), PHP_EOL;
@@ -158,14 +158,14 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\EbayOfferDetailsWithKeys**](../Model/EbayOfferDetailsWithKeys.md)| Details of the offer for the channel |
- **contentLanguage** | **string**| This request header sets the natural language that will be provided in the field values of the request payload. |
+| Name                | Type                                                                                                    | Description                                                                                                     | Notes |
+|---------------------|---------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|-------|
+| **body**            | [**SapientPro\EbayInventorySDK\Models\EbayOfferDetailsWithKeys**](../Model/EbayOfferDetailsWithKeys.md) | Details of the offer for the channel                                                                            |       |
+| **contentLanguage** | **\SapientPro\EbayInventorySDK\Enums\LocaleEnum**                                                       | This request header sets the natural language that will be provided in the field values of the request payload. |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\OfferResponse**](../Model/OfferResponse.md)
+[**SapientPro\EbayInventorySDK\Models\OfferResponse**](../Model/OfferResponse.md)
 
 ### Authorization
 
@@ -181,23 +181,19 @@ Name | Type | Description  | Notes
 # **deleteOffer**
 > deleteOffer($offerId)
 
-
-
 If used against an unpublished offer, this call will permanently delete that offer. In the case of a published offer (or live eBay listing), a successful call will either end the single-variation listing associated with the offer, or it will remove that product variation from the eBay listing and also automatically remove that product variation from the inventory item group. In the case of a multiple-variation listing, the <strong>deleteOffer</strong> will not remove the product variation from the listing if that variation has one or more sales. If that product variation has one or more sales, the seller can alternately just set the available quantity of that product variation to <code>0</code>, so it is not available in the eBay search or View Item page, and then the seller can remove that product variation from the inventory item group at a later time.
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new Api\OfferApi(
+    config: $config
 );
 $offerId = "offerId_example"; // string | The unique identifier of the offer to delete. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI.
 
@@ -211,9 +207,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **offerId** | **string**| The unique identifier of the offer to delete. The unique identifier of the offer (&lt;strong&gt;offerId&lt;/strong&gt;) is passed in at the end of the call URI. |
+| Name        | Type       | Description                                                                                                                                                      | Notes |
+|-------------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
+| **offerId** | **string** | The unique identifier of the offer to delete. The unique identifier of the offer (&lt;strong&gt;offerId&lt;/strong&gt;) is passed in at the end of the call URI. |       |
 
 ### Return type
 
@@ -231,7 +227,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getListingFees**
-> \EBay\Inventory\Model\FeesSummaryResponse getListingFees($body)
+> SapientPro\EbayInventorySDK\Models\FeesSummaryResponse getListingFees($body)
 
 
 
@@ -240,18 +236,17 @@ This call is used to retrieve the expected listing fees for up to 250 unpublishe
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
+use SapientPro\EbayInventorySDK\Models\OfferKeysWithId;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$body = new \EBay\Inventory\Model\OfferKeysWithId(); // \EBay\Inventory\Model\OfferKeysWithId | List of offers that needs fee information
+$body = OfferKeysWithId::fromArray([]);
 
 try {
     $result = $apiInstance->getListingFees($body);
@@ -264,13 +259,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\OfferKeysWithId**](../Model/OfferKeysWithId.md)| List of offers that needs fee information | [optional]
+| Name     | Type                                                                                  | Description                               | Notes      |
+|----------|---------------------------------------------------------------------------------------|-------------------------------------------|------------|
+| **body** | [**SapientPro\EbayInventorySDK\Models\OfferKeysWithId**](../Model/OfferKeysWithId.md) | List of offers that needs fee information | [optional] |
 
 ### Return type
 
-[**\EBay\Inventory\Model\FeesSummaryResponse**](../Model/FeesSummaryResponse.md)
+[**SapientPro\EbayInventorySDK\Models\FeesSummaryResponse**](../Model/FeesSummaryResponse.md)
 
 ### Authorization
 
@@ -284,25 +279,21 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getOffer**
-> \EBay\Inventory\Model\EbayOfferDetailsWithAll getOffer($offerId)
-
-
+> SapientPro\EbayInventorySDK\Models\EbayOfferDetailsWithAll getOffer($offerId)
 
 This call retrieves a specific published or unpublished offer. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI.<p>The <code>authorization</code> header is the only required HTTP header for this call. See the <strong>HTTP request headers</strong> section for more information.</p>
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
 $offerId = "offerId_example"; // string | The unique identifier of the offer that is to be retrieved.
 
@@ -317,13 +308,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **offerId** | **string**| The unique identifier of the offer that is to be retrieved. |
+| Name        | Type       | Description                                                 | Notes |
+|-------------|------------|-------------------------------------------------------------|-------|
+| **offerId** | **string** | The unique identifier of the offer that is to be retrieved. |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\EbayOfferDetailsWithAll**](../Model/EbayOfferDetailsWithAll.md)
+[**SapientPro\EbayInventorySDK\Models\EbayOfferDetailsWithAll**](../Model/EbayOfferDetailsWithAll.md)
 
 ### Authorization
 
@@ -337,7 +328,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getOffers**
-> \EBay\Inventory\Model\Offers getOffers($format, $limit, $marketplaceId, $offset, $sku)
+> SapientPro\EbayInventorySDK\Models\Offers getOffers($format, $limit, $marketplaceId, $offset, $sku)
 
 
 
@@ -346,25 +337,22 @@ This call retrieves all existing offers for the specified SKU value. The seller 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$format = "format_example"; // string | This enumeration value sets the listing format for the offer. This query parameter will be passed in if the seller only wants to see offers in this specified listing format.
-$limit = "limit_example"; // string | The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.
-$marketplaceId = "marketplaceId_example"; // string | The unique identifier of the eBay marketplace. This query parameter will be passed in if the seller only wants to see the product's offers on a specific eBay marketplace.<br /><br /><span class=\"tablenote\"><strong>Note:</strong> At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the <strong>marketplace_id</strong> query parameter currently does not have any practical use for this call.</span>
-$offset = "offset_example"; // string | The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than <code>0</code>. The first page of records has a value of <code>0</code>, the second page of records has a value of <code>1</code>, and so on. If this query parameter is not set, its value defaults to <code>0</code>, and the first page of records is returned.
+
+$limit = "5"; // string | The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.
+$offset = "0"; // string | The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than <code>0</code>. The first page of records has a value of <code>0</code>, the second page of records has a value of <code>1</code>, and so on. If this query parameter is not set, its value defaults to <code>0</code>, and the first page of records is returned.
 $sku = "sku_example"; // string | The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response.<br/><br/> <strong>Max length</strong>: 50.
 
 try {
-    $result = $apiInstance->getOffers($format, $limit, $marketplaceId, $offset, $sku);
+    $result = $apiInstance->getOffers($sku, FormatTypeEnum::FIXED_PRICE, MarketplaceEnum::EBAY_AT, $limit, $offset);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OfferApi->getOffers: ', $e->getMessage(), PHP_EOL;
@@ -374,17 +362,17 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **format** | **string**| This enumeration value sets the listing format for the offer. This query parameter will be passed in if the seller only wants to see offers in this specified listing format. | [optional]
- **limit** | **string**| The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results. | [optional]
- **marketplaceId** | **string**| The unique identifier of the eBay marketplace. This query parameter will be passed in if the seller only wants to see the product&#x27;s offers on a specific eBay marketplace.&lt;br /&gt;&lt;br /&gt;&lt;span class&#x3D;\&quot;tablenote\&quot;&gt;&lt;strong&gt;Note:&lt;/strong&gt; At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the &lt;strong&gt;marketplace_id&lt;/strong&gt; query parameter currently does not have any practical use for this call.&lt;/span&gt; | [optional]
- **offset** | **string**| The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than &lt;code&gt;0&lt;/code&gt;. The first page of records has a value of &lt;code&gt;0&lt;/code&gt;, the second page of records has a value of &lt;code&gt;1&lt;/code&gt;, and so on. If this query parameter is not set, its value defaults to &lt;code&gt;0&lt;/code&gt;, and the first page of records is returned. | [optional]
- **sku** | **string**| The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response.&lt;br/&gt;&lt;br/&gt; &lt;strong&gt;Max length&lt;/strong&gt;: 50. | [optional]
+| Name              | Type                                                   | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              | Notes      |
+|-------------------|--------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------|
+| **format**        | **\SapientPro\EbayInventorySDK\Enums\FormatTypeEnum**  | This enumeration value sets the listing format for the offer. This query parameter will be passed in if the seller only wants to see offers in this specified listing format.                                                                                                                                                                                                                                                                                                                                            | [optional] |
+| **limit**         | **string**                                             | The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results.                                                                                                                                                                                                              | [optional] |
+| **marketplaceId** | **\SapientPro\EbayInventorySDK\Enums\MarketplaceEnum** | The unique identifier of the eBay marketplace. This query parameter will be passed in if the seller only wants to see the product&#x27;s offers on a specific eBay marketplace.&lt;br /&gt;&lt;br /&gt;&lt;span class&#x3D;\&quot;tablenote\&quot;&gt;&lt;strong&gt;Note:&lt;/strong&gt; At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the &lt;strong&gt;marketplace_id&lt;/strong&gt; query parameter currently does not have any practical use for this call.&lt;/span&gt; | [optional] |
+| **offset**        | **string**                                             | The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than &lt;code&gt;0&lt;/code&gt;. The first page of records has a value of &lt;code&gt;0&lt;/code&gt;, the second page of records has a value of &lt;code&gt;1&lt;/code&gt;, and so on. If this query parameter is not set, its value defaults to &lt;code&gt;0&lt;/code&gt;, and the first page of records is returned.         | [optional] |
+| **sku**           | **string**                                             | The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response.&lt;br/&gt;&lt;br/&gt; &lt;strong&gt;Max length&lt;/strong&gt;: 50.                                                                                                                                                                                                                                                                                                                 |            |
 
 ### Return type
 
-[**\EBay\Inventory\Model\Offers**](../Model/Offers.md)
+[**SapientPro\EbayInventorySDK\Models\Offers**](../Model/Offers.md)
 
 ### Authorization
 
@@ -398,25 +386,21 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **publishOffer**
-> \EBay\Inventory\Model\PublishResponse publishOffer($offerId)
-
-
+> SapientPro\EbayInventorySDK\Models\PublishResponse publishOffer($offerId)
 
 <span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span><br /><br />This call is used to convert an unpublished offer into a published offer, or live eBay listing. The unique identifier of the offer (<strong>offerId</strong>) is passed in at the end of the call URI.<br/><br/>For those who prefer to publish multiple offers (up to 25 at a time) with one call, the <strong>bulkPublishOffer</strong> method can be used. In the case of a multiple-variation listing, the <strong>publishOfferByInventoryItemGroup</strong> call should be used instead, as this call will convert all unpublished offers associated with an inventory item group into a multiple-variation listing.
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
 $offerId = "offerId_example"; // string | The unique identifier of the offer that is to be published.
 
@@ -431,13 +415,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **offerId** | **string**| The unique identifier of the offer that is to be published. |
+| Name        | Type       | Description                                                 | Notes |
+|-------------|------------|-------------------------------------------------------------|-------|
+| **offerId** | **string** | The unique identifier of the offer that is to be published. |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\PublishResponse**](../Model/PublishResponse.md)
+[**SapientPro\EbayInventorySDK\Models\PublishResponse**](../Model/PublishResponse.md)
 
 ### Authorization
 
@@ -451,7 +435,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **publishOfferByInventoryItemGroup**
-> \EBay\Inventory\Model\PublishResponse publishOfferByInventoryItemGroup($body)
+> SapientPro\EbayInventorySDK\Models\PublishResponse publishOfferByInventoryItemGroup($body)
 
 
 
@@ -460,18 +444,17 @@ Name | Type | Description  | Notes
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
+use SapientPro\EbayInventorySDK\Models\PublishByInventoryItemGroupRequest;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$body = new \EBay\Inventory\Model\PublishByInventoryItemGroupRequest(); // \EBay\Inventory\Model\PublishByInventoryItemGroupRequest | The identifier of the inventory item group to publish and the eBay marketplace where the listing will be published is needed in the request payload.
+$body = PublishByInventoryItemGroupRequest::fromArray([]);
 
 try {
     $result = $apiInstance->publishOfferByInventoryItemGroup($body);
@@ -484,13 +467,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\PublishByInventoryItemGroupRequest**](../Model/PublishByInventoryItemGroupRequest.md)| The identifier of the inventory item group to publish and the eBay marketplace where the listing will be published is needed in the request payload. |
+| Name     | Type                                                                                                                        | Description                                                                                                                                          | Notes |
+|----------|-----------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|-------|
+| **body** | [**SapientPro\EbayInventorySDK\Models\PublishByInventoryItemGroupRequest**](../Model/PublishByInventoryItemGroupRequest.md) | The identifier of the inventory item group to publish and the eBay marketplace where the listing will be published is needed in the request payload. |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\PublishResponse**](../Model/PublishResponse.md)
+[**SapientPro\EbayInventorySDK\Models\PublishResponse**](../Model/PublishResponse.md)
 
 ### Authorization
 
@@ -504,32 +487,28 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **updateOffer**
-> \EBay\Inventory\Model\OfferResponse updateOffer($body, $contentLanguage, $offerId)
-
-
+> SapientPro\EbayInventorySDK\Models\OfferResponse updateOffer($body, $contentLanguage, $offerId)
 
 This call updates an existing offer. An existing offer may be in published state (active eBay listing), or in an unpublished state and yet to be published with the <strong>publishOffer</strong> call. The unique identifier (<strong>offerId</strong>) for the offer to update is passed in at the end of the call URI. <br/><br/> The <strong>updateOffer</strong> call does a complete replacement of the existing offer object, so all fields that make up the current offer object are required, regardless of whether their values changed. <br/><br/> Other information that is required before an unpublished offer can be published or before a published offer can be revised include: <ul><li>Inventory location</li> <li>Offer price</li> <li>Available quantity</li> <li>eBay listing category</li>  <li>Referenced listing policy profiles to set payment, return, and fulfillment values/settings</li> </ul> <p><span class=\"tablenote\"><strong>Note:</strong> Though the <strong>includeCatalogProductDetails</strong> parameter is not required to be submitted in the request, the parameter defaults to <code>true</code> if omitted from both the <strong>updateOffer</strong> and the <strong>createOffer</strong> calls. If a value is specified in the <strong>updateOffer</strong> call, this value will be used.</span><br /><br /><span class=\"tablenote\"><strong>Note:</strong> Each listing can be revised up to 250 times in one calendar day. If this revision threshold is reached, the seller will be blocked from revising the item until the next calendar day.</span></p> <p>For published offers, the <strong>listingDescription</strong> field is also required to update the offer/eBay listing. For unpublished offers, this field is not necessarily required unless it is already set for the unpublished offer.</p> <p>In addition to the <code>authorization</code> header, which is required for all eBay REST API calls, the <strong>updateOffer</strong> call also requires the <code>Content-Language</code> header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be <code>en-US</code>. To view other supported <code>Content-Language</code> values, and to read more about all supported HTTP headers for eBay REST API calls, see the <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a> topic in the <strong>Using eBay RESTful APIs</strong> document.</p>
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
+use SapientPro\EbayInventorySDK\Models\EbayOfferDetailsWithId;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$body = new \EBay\Inventory\Model\EbayOfferDetailsWithId(); // \EBay\Inventory\Model\EbayOfferDetailsWithId | Details of the offer for the channel
-$contentLanguage = "contentLanguage_example"; // string | This request header sets the natural language that will be provided in the field values of the request payload.
+$body = EbayOfferDetailsWithId::fromArray([]); // SapientPro\EbayInventorySDK\Models\EbayOfferDetailsWithId | Details of the offer for the channel
 $offerId = "offerId_example"; // string | The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI.
 
 try {
-    $result = $apiInstance->updateOffer($body, $contentLanguage, $offerId);
+    $result = $apiInstance->updateOffer($body, LocaleEnum::en_US, $offerId);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling OfferApi->updateOffer: ', $e->getMessage(), PHP_EOL;
@@ -539,15 +518,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\EbayOfferDetailsWithId**](../Model/EbayOfferDetailsWithId.md)| Details of the offer for the channel |
- **contentLanguage** | **string**| This request header sets the natural language that will be provided in the field values of the request payload. |
- **offerId** | **string**| The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. |
+| Name                | Type                                                                                                | Description                                                                                                        | Notes |
+|---------------------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------|-------|
+| **body**            | [**SapientPro\EbayInventorySDK\Models\EbayOfferDetailsWithId**](../Model/EbayOfferDetailsWithId.md) | Details of the offer for the channel                                                                               |       |
+| **contentLanguage** | **\SapientPro\EbayInventorySDK\Enums\LocaleEnum**                                                   | This request header sets the natural language that will be provided in the field values of the request payload.    |       |
+| **offerId**         | **string**                                                                                          | The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\OfferResponse**](../Model/OfferResponse.md)
+[**SapientPro\EbayInventorySDK\Models\OfferResponse**](../Model/OfferResponse.md)
 
 ### Authorization
 
@@ -561,7 +540,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **withdrawOffer**
-> \EBay\Inventory\Model\WithdrawResponse withdrawOffer($offerId)
+> SapientPro\EbayInventorySDK\Models\WithdrawResponse withdrawOffer($offerId)
 
 
 
@@ -570,16 +549,14 @@ This call is used to end a single-variation listing that is associated with the 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
 $offerId = "offerId_example"; // string | The unique identifier of the offer that is to be withdrawn. This value is passed into the path of the call URI.
 
@@ -594,13 +571,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **offerId** | **string**| The unique identifier of the offer that is to be withdrawn. This value is passed into the path of the call URI. |
+| Name        | Type       | Description                                                                                                     | Notes |
+|-------------|------------|-----------------------------------------------------------------------------------------------------------------|-------|
+| **offerId** | **string** | The unique identifier of the offer that is to be withdrawn. This value is passed into the path of the call URI. |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\WithdrawResponse**](../Model/WithdrawResponse.md)
+[**SapientPro\EbayInventorySDK\Models\WithdrawResponse**](../Model/WithdrawResponse.md)
 
 ### Authorization
 
@@ -623,18 +600,17 @@ This call is used to end a multiple-variation eBay listing that is associated wi
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\OfferApi;
+use SapientPro\EbayInventorySDK\Models\WithdrawByInventoryItemGroupRequest;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\OfferApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new OfferApi(
+    config: $config
 );
-$body = new \EBay\Inventory\Model\WithdrawByInventoryItemGroupRequest(); // \EBay\Inventory\Model\WithdrawByInventoryItemGroupRequest | The base request of the <strong>withdrawOfferByInventoryItemGroup</strong> call.
+$body = WithdrawByInventoryItemGroupRequest::fromArray([]); // SapientPro\EbayInventorySDK\Models\WithdrawByInventoryItemGroupRequest | The base request of the <strong>withdrawOfferByInventoryItemGroup</strong> call.
 
 try {
     $apiInstance->withdrawOfferByInventoryItemGroup($body);
@@ -646,9 +622,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\WithdrawByInventoryItemGroupRequest**](../Model/WithdrawByInventoryItemGroupRequest.md)| The base request of the &lt;strong&gt;withdrawOfferByInventoryItemGroup&lt;/strong&gt; call. |
+| Name     | Type                                                                                                                          | Description                                                                                  | Notes |
+|----------|-------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------|-------|
+| **body** | [**SapientPro\EbayInventorySDK\Models\WithdrawByInventoryItemGroupRequest**](../Model/WithdrawByInventoryItemGroupRequest.md) | The base request of the &lt;strong&gt;withdrawOfferByInventoryItemGroup&lt;/strong&gt; call. |       |
 
 ### Return type
 

@@ -2,11 +2,15 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the base response payload for the <strong>getListingFees</strong> call.
  */
 class FeesSummaryResponse implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container consists of an array of one or more listing fees that the seller can expect to pay
      * for unpublished offers specified in the call request.

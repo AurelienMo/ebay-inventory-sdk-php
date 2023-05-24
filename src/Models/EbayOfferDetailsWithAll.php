@@ -6,6 +6,7 @@ use SapientPro\EbayInventorySDK\Enums\FormatTypeEnum;
 use SapientPro\EbayInventorySDK\Enums\ListingDurationEnum;
 use SapientPro\EbayInventorySDK\Enums\MarketplaceEnum;
 use SapientPro\EbayInventorySDK\Enums\OfferStatusEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type provides details of an offer,
@@ -13,11 +14,13 @@ use SapientPro\EbayInventorySDK\Enums\OfferStatusEnum;
  */
 class EbayOfferDetailsWithAll implements EbayModelInterface
 {
+    use FillsModel;
+
     /** This integer value indicates the quantity of the inventory item (specified by the <strong>sku</strong> value) that will be available for purchase by buyers shopping on the eBay site specified in the <strong>marketplaceId</strong> field. For unpublished offers where the available quantity has yet to be set, the <strong>availableQuantity</strong> value is set to <code>0</code>. */
     public int $availableQuantity;
 
     /** The unique identifier of the primary eBay category that the inventory item is listed under. This field is always returned for published offers, but is only returned if set for unpublished offers. */
-    public string $categoryId;
+    public ?string $categoryId;
 
     /**
      * This container is returned if a charitable organization will receive
@@ -25,9 +28,9 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * This container consists of the <strong>charityId</strong> field to identify the charitable organization,
      * and the <strong>donationPercentage</strong> field that indicates the percentage of the sales proceeds
      * that will be donated to the charitable organization.
-     * @var Charity
+     * @var Charity|null
      */
-    public Charity $charity;
+    public ?Charity $charity;
 
     /**
      * This container provides IDs for the producer
@@ -36,9 +39,9 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * This container is supported by a limited number of sites and specific categories.
      * Use the "/api-docs/sell/metadata/resources/marketplace/methods/getExtendedProducerResponsibilityPolicies"
      * method of the <strong>Sell Metatdata API</strong> to retrieve valid categories for a site.
-     * @var ExtendedProducerResponsibility
+     * @var ExtendedProducerResponsibility|null
      */
-    public ExtendedProducerResponsibility $extendedProducerResponsibility;
+    public ?ExtendedProducerResponsibility $extendedProducerResponsibility;
 
     /**
      * This enumerated value indicates the listing format of the offer.
@@ -60,7 +63,7 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
     public bool $hideBuyerDetails = false;
 
     /** This field indicates whether or not eBay product catalog details are applied to a listing. A value of <code>true</code> indicates the listing corresponds to the eBay product associated with the provided product identifier. The product identifier is provided in <strong>createOrReplaceInventoryItem</strong>.<p><span class="tablenote"><strong>Note:</strong> Though the <strong>includeCatalogProductDetails</strong> parameter is not required to be submitted in the request, the parameter defaults to 'true' if omitted.</span></p> */
-    public bool $includeCatalogProductDetails;
+    public bool $includeCatalogProductDetails = true;
 
     /**
      * For published offers, this container is always returned in the <strong>getOffer</strong>
@@ -68,12 +71,12 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * and includes the eBay listing ID associated with the offer,
      * the status of the listing, and the quantity sold through the listing.
      * The <strong>listing</strong> container is not returned at all for unpublished offers.
-     * @var ListingDetails
+     * @var ListingDetails|null
      */
-    public ListingDetails $listing;
+    public ?ListingDetails $listing;
 
     /** The description of the eBay listing that is part of the unpublished or published offer. This field is always returned for published offers, but is only returned if set for unpublished offers.<br><br><strong>Max Length</strong>: 500000 (which includes HTML markup/tags) */
-    public string $listingDescription;
+    public ?string $listingDescription;
 
     /**
      * This field indicates the number of days that the listing will be active.
@@ -112,10 +115,10 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
     public ListingPolicies $listingPolicies;
 
     /** This timestamp is the date/time that the seller set for the scheduled listing. With the scheduled listing feature, the seller can set a time in the future that the listing will become active, instead of the listing becoming active immediately after a <strong>publishOffer</strong> call. <br><br> Scheduled listings do not always start at the exact date/time specified by the seller, but the date/time of the timestamp returned in <strong>getOffer</strong>/<strong>getOffers</strong> will be the same as the timestamp passed into a 'Create' or 'Update' offer call. <br><br> This field is returned if set for an offer. */
-    public string $listingStartDate;
+    public ?string $listingStartDate;
 
     /** This field is only applicable and returned if the listing is a lot listing. A lot listing is a listing that has multiple quantity of the same product. An example would be a set of four identical car tires. The integer value in this field is the number of identical items being sold through the lot listing. */
-    public int $lotSize;
+    public ?int $lotSize;
 
     /**
      * This enumeration value is the unique identifier of the eBay site on which the offer is available,
@@ -145,19 +148,19 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
     public PricingSummary $pricingSummary;
 
     /** This field is only applicable and set if the seller wishes to set a restriction on the purchase quantity of an inventory item per seller. If this field is set by the seller for the offer, then each distinct buyer may purchase up to, but not exceed the quantity in this field. So, if this field's value is <code>5</code>, each buyer may purchase a quantity of the inventory item between one and five, and the purchases can occur in one multiple-quantity purchase, or over multiple transactions. If a buyer attempts to purchase one or more of these products, and the cumulative quantity will take the buyer beyond the quantity limit, that buyer will be blocked from that purchase.<br> */
-    public int $quantityLimitPerBuyer;
+    public ?int $quantityLimitPerBuyer;
 
     /**
      * <span class="tablenote">This container, as well as its child containers and fields,
      * will not be available until March 1, 2023.</span><br><br>
      * This container is used by the seller to provide hazardous material related information
      * and the repair score for the listing.
-     * @var Regulatory
+     * @var Regulatory|null
      */
-    public Regulatory $regulatory;
+    public ?Regulatory $regulatory;
 
     /** The unique identifier for a secondary category. This field is applicable if the seller decides to list the item under two categories. Sellers can use the <a href="/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions" target="_blank">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. A fee may be charged when adding a secondary category to a listing. <br><br><span class="tablenote"><strong>Note:</strong> You cannot list <strong>US eBay Motors</strong> vehicles in two categories. However, you can list <strong>Parts & Accessories</strong> in two categories.</span> */
-    public string $secondaryCategoryId;
+    public ?string $secondaryCategoryId;
 
     /** This is the seller-defined SKU value of the product in the offer.<br><br><strong>Max Length</strong>: 50 <br> */
     public string $sku;
@@ -178,9 +181,9 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * as shown below:
      * <br> <pre><code>"storeCategoryNames": [<br> "/Fashion/Men/Shirts", <br> "/Fashion/Men/Accessories" ],
      * </pre></code>
-     * @var string[]
+     * @var string[]|null
      */
-    public array $storeCategoryNames;
+    public ?array $storeCategoryNames;
 
     /**
      * This container is only returned if a sales tax table,
@@ -192,7 +195,7 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * state/tax jurisdiction in order for that buyer to be subject to sales tax.
      * <br><br>See the https://pages.ebay.com/help/pay/checkout-tax-table.html help page for more information
      * on setting up and using a sales tax table.
-     * @var Tax
+     * @var Tax|null
      */
-    public Tax $tax;
+    public ?Tax $tax;
 }

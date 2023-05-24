@@ -2,11 +2,15 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the <strong>offers</strong> container in a <strong>Bulk Update Price and Quantity</strong> call to update the current price and/or quantity of one or more offers associated with a specific inventory item.
  */
 class OfferPriceQuantity implements EbayModelInterface
 {
+    use FillsModel;
+
     /** This field is used if the seller wants to modify the current quantity of the inventory item that will be available for purchase in the offer (identified by the corresponding <strong>offerId</strong> value). Either the <strong>availableQuantity</strong> field or the <strong>price</strong> container is required, but not necessarily both. */
     public int $availableQuantity;
 

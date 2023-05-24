@@ -2,11 +2,15 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used to specify/indicate the motor vehicles that are compatible with the corresponding inventory item.
  */
 class CompatibleProduct implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container consists of an array of motor vehicles that are compatible with the motor vehicle part
      * or accessory specified by the SKU value in the call URI.
@@ -47,12 +51,12 @@ class CompatibleProduct implements EbayModelInterface
      * container, you should make plans to migrate to <strong>compatibilityProperties</strong>.
      * The <strong>productFamilyProperties</strong>
      * and <strong>compatibilityProperties</strong> containers may not be used together or the call will fail.</span>
-     * @var NameValueList[]
+     * @var NameValueList[]|null
      */
-    public array $compatibilityProperties;
+    public ?array $compatibilityProperties;
 
     /** This field is optionally used by the seller to input any notes pertaining to the compatible vehicle list being defined. The seller might use this field to specify the placement of the part on a vehicle or other applicable information. This field will only be returned if specified by the seller.<br><br><strong>Max Length</strong>: 500<br> */
-    public string $notes;
+    public ?string $notes;
 
     /**
      * This container consists of an array of motor vehicles that are compatible with the motor vehicle part
@@ -71,9 +75,9 @@ class CompatibleProduct implements EbayModelInterface
      * you should make plans to migrate to <strong>compatibilityProperties</strong>.
      * The <strong>productFamilyProperties</strong>
      * and <strong>compatibilityProperties</strong> containers may not be used together or the call will fail.</span>
-     * @var ProductFamilyProperties
+     * @var ProductFamilyProperties|null
      */
-    public ProductFamilyProperties $productFamilyProperties;
+    public ?ProductFamilyProperties $productFamilyProperties;
 
     /**
      * This container is used in a <strong>createOrReplaceProductCompatibility</strong> call
@@ -84,7 +88,7 @@ class CompatibleProduct implements EbayModelInterface
      * If the vehicle cannot be found using these identifiers,
      * the vehicle will not be added to the compatible vehicle list.
      * <br><br>Note that this container will not be returned in the <strong>getProductCompatibility</strong> call.
-     * @var ProductIdentifier
+     * @var ProductIdentifier|null
      */
-    public ProductIdentifier $productIdentifier;
+    public ?ProductIdentifier $productIdentifier;
 }

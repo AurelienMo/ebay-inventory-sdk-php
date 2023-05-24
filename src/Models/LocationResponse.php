@@ -2,11 +2,15 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the base response payload for the <strong>getInventoryLocations</strong> call.
  */
 class LocationResponse implements EbayModelInterface
 {
+    use FillsModel;
+
     /** The URI of the current page of results from the result set. */
     public string $href;
 

@@ -4,6 +4,7 @@ namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\ConditionEnum;
 use SapientPro\EbayInventorySDK\Enums\LocaleEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used to define/modify each inventory item record that is being created and/or updated
@@ -12,6 +13,8 @@ use SapientPro\EbayInventorySDK\Enums\LocaleEnum;
  */
 class InventoryItemWithSkuLocale implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container is used to specify the quantity of the inventory item that is available for purchase.
      * <br><br>
@@ -22,9 +25,9 @@ class InventoryItemWithSkuLocale implements EbayModelInterface
      * Since an inventory item must have specified quantity before being published in an offer, this container
      * is always returned in the 'Get' calls for SKUs that are part of a published offer. If a SKU is not part
      * of a published offer, this container will only be returned if set for the inventory item.
-     * @var Availability
+     * @var Availability|null
      */
-    public Availability $availability;
+    public ?Availability $availability;
 
     /**
      * This enumeration value indicates the condition of the item. Supported item condition values will
@@ -63,12 +66,12 @@ class InventoryItemWithSkuLocale implements EbayModelInterface
      * For implementation help, refer to
      * <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:ConditionEnum'>eBay API documentation</a>
      *
-     * @var ConditionEnum
+     * @var ConditionEnum|null
      */
-    public ConditionEnum $condition;
+    public ?ConditionEnum $condition;
 
     /** This string field is used by the seller to more clearly describe the condition of a used inventory item, or an inventory item whose <strong>condition</strong> value is not <code>NEW</code>, <code>LIKE_NEW</code>, <code>NEW_OTHER</code>, or <code>NEW_WITH_DEFECTS</code>.<br><br> The <strong>conditionDescription</strong> field is available for all eBay categories. If the <strong>conditionDescription</strong> field is used with an item in one of the new conditions (mentioned in previous paragraph), eBay will simply ignore this field if included, and eBay will return a warning message to the user. <br><br> This field should only be used to further clarify the condition of the used item. It should not be used for branding, promotions, shipping, returns, payment or other information unrelated to the condition of the used item. Make sure that the <strong>condition</strong> value, condition description, listing description, and the item's pictures do not contradict one another. <br><br> This field is not always required, but is required if an inventory item is being updated and a condition description already exists for that inventory item. <br><br> This field is returned in the <strong>getInventoryItem</strong>, <strong>bulkGetInventoryItem</strong>, and <strong>getInventoryItems</strong> calls if a condition description was provided for a used inventory item.<br><br><strong>Max Length</strong>: 1000. */
-    public string $conditionDescription;
+    public ?string $conditionDescription;
 
     /**
      * This request parameter sets the natural language that was provided in the field values of the
@@ -96,9 +99,9 @@ class InventoryItemWithSkuLocale implements EbayModelInterface
      * <a href="https://pages.ebay.com/help/pay/calculated-shipping.html" target="_blank">Calculated shipping</a>
      * help page for more information on calculated shipping.
      *
-     * @var PackageWeightAndSize
+     * @var PackageWeightAndSize|null
      */
-    public PackageWeightAndSize $packageWeightAndSize;
+    public ?PackageWeightAndSize $packageWeightAndSize;
 
     /**
      * This container is used to define the product details, such as product title, product description,
@@ -136,10 +139,10 @@ class InventoryItemWithSkuLocale implements EbayModelInterface
      * must be defined for published offers, but for unpublished inventory items, this container will only
      * be returned if product details have been defined for the inventory item.
      *
-     * @var Product
+     * @var Product|null
      */
-    public Product $product;
+    public ?Product $product;
 
     /** This is the seller-defined SKU value of the product that will be listed on the eBay site (specified in the <strong>marketplaceId</strong> field). Only one offer (in unpublished or published state) may exist for each <strong>sku</strong>/<strong>marketplaceId</strong>/<strong>format</strong> combination. This field is required.<br><br><strong>Max Length</strong>: 50<br> */
-    public string $sku;
+    public ?string $sku;
 }

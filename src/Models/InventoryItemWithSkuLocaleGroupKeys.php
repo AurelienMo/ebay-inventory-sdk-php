@@ -4,12 +4,15 @@ namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\ConditionEnum;
 use SapientPro\EbayInventorySDK\Enums\LocaleEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used to provide details about each retrieved inventory item record.
  */
 class InventoryItemWithSkuLocaleGroupKeys implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container shows the quantity of the inventory item that is available for purchase if the item
      * will be shipped to the buyer, and/or the quantity of the inventory item that is available for

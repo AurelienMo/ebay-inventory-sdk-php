@@ -2,11 +2,15 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used to express detailed information on errors and warnings that may occur with a call request.
  */
 class Error implements EbayModelInterface
 {
+    use FillsModel;
+
     /** This string value indicates the error category. There are three categories of errors: request errors, application errors, and system errors. */
     public string $category;
 

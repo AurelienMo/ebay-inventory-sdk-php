@@ -2,6 +2,8 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the <strong>inventoryItems</strong> container that is returned in the response
  * of the <strong>bulkMigrateListing</strong> call. Up to five <strong>sku</strong>/<strong>offerId</strong>
@@ -10,6 +12,8 @@ namespace SapientPro\EbayInventorySDK\Models;
  */
 class InventoryItemListing implements EbayModelInterface
 {
+    use FillsModel;
+
     /** Upon a successful migration of a listing, eBay auto-generates this unique identifier, and this offer ID value will be used to retrieve and manage the newly-created offer object. This value will only be generated and returned if the eBay listing is migrated successfully. */
     public string $offerId;
 

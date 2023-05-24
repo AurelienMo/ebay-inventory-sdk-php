@@ -2,6 +2,8 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the base request payload of the
  * <strong>createOrReplaceInventoryItemGroup</strong> call and the base response
@@ -9,6 +11,8 @@ namespace SapientPro\EbayInventorySDK\Models;
  */
 class InventoryItemGroup implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This is a collection of item specifics (aka product aspects) name-value pairs
      * that are shared by all product variations within the inventory item group.
@@ -31,10 +35,10 @@ class InventoryItemGroup implements EbayModelInterface
      * inventory item group have been published, and is only returned if set for an
      * inventory item group if that group has yet to have any offers published.
      */
-    public string $aspects;
+    public ?array $aspects;
 
     /** The description of the inventory item group. This description should fully describe the product and the variations of the product that are available in the inventory item group, since this description will ultimately become the listing description once the first offer of the group is published. This field is not initially required when first creating an inventory item group, but will be required before the first offer of the group is published. <br><br><span class="tablenote"> <strong>Note:</strong> Since this description will ultimately  become the listing description in a multiple-variation listing, the seller should omit the <strong>listingDescription</strong> field when creating the offers for each variation. If they include the <strong>listingDescription</strong> field for the individual offer(s) in an item group, the text in that field for a published offer will overwrite the text provided in this <strong>description</strong> field for the inventory item group.</span><br><br>HTML tags and markup can be used in this field, but each character counts toward the max length limit.<br><br><span class="tablenote"> <strong>Note:</strong> To ensure that their short listing description is optimized when viewed on mobile devices, sellers should strongly consider using eBay's <a href="https://pages.ebay.com/sell/itemdescription/customizeyoursummary.html " target="_blank">View Item description summary feature</a> when listing their items. Keep in mind that the 'short' listing description is what prospective buyers first see when they view the listing on a mobile device. The 'full' listing description is also available to mobile users when they click on the short listing description, but the full description is not automatically optimized for viewing in mobile devices, and many users won't even drill down to the full description.<br><br> Using HTML div and span tag attributes, this feature allows sellers to customize and fully control the short listing description that is displayed to prospective buyers when viewing the listing on a mobile device. The short listing description on mobile devices is limited to 800 characters, and whenever the full listing description (provided in this field, in UI, or seller tool) exceeds this limit, eBay uses a special algorithm to derive the best possible short listing description within the 800-character limit. However, due to some short listing description content being removed, it is definitely not ideal for the seller, and could lead to a bad buyer experience and possibly to a Significantly not as described (SNAD) case, since the buyer may not get complete details on the item when viewing the short listing description. See the eBay help page for more details on using the HTML div and span tags.</span><br><br>This field is always returned if one or more offers associated with the inventory item group have been published, and is only returned if set for an inventory item group if that group has yet to have any offers published.<br><br><strong>Max Length</strong>: 500000 (which includes HTML markup/tags)<br> */
-    public string $description;
+    public ?string $description;
 
     /**
      * An array of one or more links to images for the inventory item group. URLs must
@@ -73,16 +77,16 @@ class InventoryItemGroup implements EbayModelInterface
      *
      * @var string[]
      */
-    public array $imageUrls;
+    public ?array $imageUrls;
 
     /** This is the unique identifier of the inventory item group. This identifier is created by the seller when an inventory item group is created. This field is only applicable to the <strong>getInventoryItemGroup</strong> call and not to the <strong>createOrReplaceInventoryItemGroup</strong> call. In the <strong>createOrReplaceInventoryItemGroup</strong> call, the <strong>inventoryItemGroupKey</strong> value is passed into the end of the call URI instead. */
-    public string $inventoryItemGroupKey;
+    public ?string $inventoryItemGroupKey;
 
     /** A subtitle is an optional listing feature that allows the seller to provide more information about the product, possibly including keywords that may assist with search results. An additional listing fee will be charged to the seller if a subtitle is used. For more information on using listing subtitles on the US site, see the <a href="https://pages.ebay.com/help/sell/itemsubtitle.html " target="_blank">Adding a subtitle to your listings</a> help page. <br><br><span class="tablenote"> <strong>Note:</strong> Since this subtitle will ultimately  become the subtitle in a multiple-variation listing, the seller should not include the <strong>subtitle</strong> field when creating the inventory items that are members of the group. If they do include the <strong>subtitle</strong> field in an inventory item record, the text in that field will overwrite the text provided in this <strong>subtitle</strong> field for each inventory item in the group that is published.</span><br><br>This field will only be returned if set for an inventory item.<br><br><strong>Max Length</strong>: 55<br> */
-    public string $subtitle;
+    public ?string $subtitle;
 
     /** The title of the inventory item group. This title will ultimately become the listing title once the first offer of the group is published. This field is not initially required when first creating an inventory item group, but will be required before the first offer of the group is published.<br><br><span class="tablenote"> <strong>Note:</strong> Since this title will ultimately  become the listing title in a multiple-variation listing, the seller should omit the <strong>title</strong> field when creating the inventory items that are members of the group. If they do include the <strong>title</strong> field in an inventory item record, the text in that field will overwrite the text provided in this <strong>title</strong> field for each inventory item in the group that is published.</span><br><br> This field is always returned if one or more offers associated with the inventory item group have been published, and is only returned if set for an inventory item group if that group has yet to have any offers published.<br><br><strong>Max Length</strong>: 80 <br> */
-    public string $title;
+    public ?string $title;
 
     /**
      * This required container is used to assign individual inventory items to the
@@ -128,9 +132,9 @@ class InventoryItemGroup implements EbayModelInterface
      * inventory item group have been published, and is only returned if set for an
      * inventory item group if that group has yet to have any offers published.
      *
-     * @var VariesBy
+     * @var VariesBy|null
      */
-    public VariesBy $variesBy;
+    public ?VariesBy $variesBy;
 
     /**
      * An array of one or more VideoId values for the inventory item group. A VideoId
@@ -145,5 +149,5 @@ class InventoryItemGroup implements EbayModelInterface
      *
      * @var string[]
      */
-    public array $videoIds;
+    public ?array $videoIds;
 }

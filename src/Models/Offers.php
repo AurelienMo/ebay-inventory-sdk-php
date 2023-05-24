@@ -2,11 +2,15 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used by the base response of the <strong>getOffers</strong> call, and it is an array of one or more of the seller's offers, along with pagination data.
  */
 class Offers implements EbayModelInterface
 {
+    use FillsModel;
+
     /** This is the URL to the current page of offers. */
     public string $href;
 
@@ -14,7 +18,7 @@ class Offers implements EbayModelInterface
     public int $limit;
 
     /** This is the URL to the next page of offers. This field will only be returned if there are additional offers to view. */
-    public string $next;
+    public ?string $next;
 
     /**
      * This container is an array of one or more of the seller's offers for the SKU value that is passed in through the required <strong>sku</strong> query parameter.<br><br> <span class="tablenote"> <strong>Note:</strong> Currently, the Inventory API does not support the same SKU across multiple eBay marketplaces, so the <strong>getOffers</strong> call will only return one offer.</span><br><br><strong>Max Occurs:</strong> 25
@@ -23,7 +27,7 @@ class Offers implements EbayModelInterface
     public array $offers;
 
     /** This is the URL to the previous page of offers. This field will only be returned if there are previous offers to view. */
-    public string $prev;
+    public ?string $prev;
 
     /** This integer value indicates the number of offers being displayed on the current page of results. This number will generally be the same as the <strong>limit</strong> value if there are additional pages of results to view.<br><br> <span class="tablenote"> <strong>Note:</strong> Currently, the Inventory API does not support the same SKU across multiple eBay marketplaces, so the <strong>Get Offers</strong> call will only return one offer, so this value should always be <code>1</code>.</span> */
     public int $size;

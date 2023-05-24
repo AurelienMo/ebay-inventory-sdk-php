@@ -3,12 +3,15 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\MarketplaceEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used to display the results of each listing that the seller attempted to migrate.
  */
 class MigrateListingResponse implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * If one or more errors occur with the attempt to migrate the listing, this container will be returned with detailed information on each error.
      * @var Error[]

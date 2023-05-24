@@ -2,6 +2,8 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used to specify the quantity of the inventory item
  * that is available for purchase if the item will be shipped to the buyer,
@@ -11,6 +13,8 @@ namespace SapientPro\EbayInventorySDK\Models;
  */
 class Availability implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container consists of an array of one or more of the merchant's physical store locations
      * where the inventory item is available for In-Store Pickup orders.

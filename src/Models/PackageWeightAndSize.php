@@ -11,20 +11,20 @@ class PackageWeightAndSize implements EbayModelInterface
 {
     /**
      * This container is used to indicate the length, width, and height of the shipping package that will be used to ship the inventory item. The dimensions of a shipping package are needed when calculated shipping is used.<br><br>This container will be returned if package dimensions are set for the inventory item.
-     * @var Dimension
+     * @var Dimension|null
      */
-    public Dimension $dimensions;
+    public ?Dimension $dimensions;
 
     /**
      * This enumeration value indicates the type of shipping package used to ship the inventory item. The supported values for this field can be found in the <a href="/api-docs/sell/inventory/types/slr:PackageTypeEnum" target="_blank">PackageTypeEnum</a> type.<br><br>This field will be returned if the package type is set for the inventory item.<br><br><span class="tablenote"> <strong>Note:</strong> You can use the <a href="/Devzone/XML/docs/Reference/eBay/GeteBayDetails.html#Response.ShippingPackageDetails" target="_blank">GeteBayDetails</a> Trading API call to retrieve a list of supported package types for a specific marketplace.</span> For implementation help, refer to <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:PackageTypeEnum'>eBay API documentation</a>
      *
-     * @var PackageTypeEnum
+     * @var PackageTypeEnum|null
      */
-    public PackageTypeEnum $packageType;
+    public ?PackageTypeEnum $packageType;
 
     /**
      * This container is used to specify the weight of the shipping package that will be used to ship the inventory item. The weight of a shipping package are needed when calculated shipping is used, or if flat-rate shipping rates are used, but with a weight surcharge.<br><br>This field will be returned if package weight is set for the inventory item.
-     * @var \SapientPro\EbayInventorySDK\Models\Weight
+     * @var Weight|null
      */
-    public Weight $weight;
+    public ?Weight $weight;
 }

@@ -4,6 +4,7 @@ namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\StatusEnum;
 use SapientPro\EbayInventorySDK\Enums\StoreTypeEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used by the <strong>createInventoryLocation</strong> call to provide details on the
@@ -12,6 +13,8 @@ use SapientPro\EbayInventorySDK\Enums\StoreTypeEnum;
  */
 class InventoryLocationFull implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This required container is used to set the physical address and geographical coordinates (optional)
      * of a warehouse or store inventory location. A warehouse inventory location only requires the city,

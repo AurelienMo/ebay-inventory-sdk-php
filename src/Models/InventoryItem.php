@@ -3,12 +3,15 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\ConditionEnum;
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
 
 /**
  * This type is used to provide detailed information about an inventory item.
  */
 class InventoryItem implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This container is used to specify the quantity of the inventory item that are available for purchase.
      * <br><br> This container is optional up until the seller is ready to publish an offer with the SKU,

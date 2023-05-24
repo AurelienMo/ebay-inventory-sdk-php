@@ -2,11 +2,15 @@
 
 namespace SapientPro\EbayInventorySDK\Models;
 
+use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+
 /**
  * This type is used to display the result for each offer and/or inventory item that the seller attempted to update with a <strong>bulkUpdatePriceQuantity</strong> call. If any errors or warnings occur, the error/warning data is returned at the offer/inventory item level.
  */
 class PriceQuantityResponse implements EbayModelInterface
 {
+    use FillsModel;
+
     /**
      * This array will be returned if there were one or more errors associated with the update to the offer or inventory item record.
      * @var Error[]
