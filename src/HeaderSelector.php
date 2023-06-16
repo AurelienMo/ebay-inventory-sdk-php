@@ -20,7 +20,8 @@ class HeaderSelector
         $headers = [];
 
         $accept = $this->selectAcceptHeader($accept);
-        if ($accept !== null) {
+
+        if (null !== $accept) {
             $headers['Accept'] = $accept;
         }
 
@@ -38,13 +39,11 @@ class HeaderSelector
      */
     private function selectAcceptHeader(array $accept): ?string
     {
-        if (count($accept) === 0 || (count($accept) === 1 && $accept[0] === '')) {
+        if (empty($accept)) {
             return null;
-        } elseif (preg_grep("/application\/json/i", $accept)) {
-            return 'application/json';
-        } else {
-            return implode(',', $accept);
         }
+
+        return implode(',', $accept);
     }
 
     /**
@@ -56,12 +55,10 @@ class HeaderSelector
      */
     private function selectContentTypeHeader(array $contentType): string
     {
-        if (count($contentType) === 0 || (count($contentType) === 1 && $contentType[0] === '')) {
+        if (empty($contentType)) {
             return 'application/json';
-        } elseif (preg_grep("/application\/json/i", $contentType)) {
-            return 'application/json';
-        } else {
-            return implode(',', $contentType);
         }
+
+        return implode(',', $contentType);
     }
 }

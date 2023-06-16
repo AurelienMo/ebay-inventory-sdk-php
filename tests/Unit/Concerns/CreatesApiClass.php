@@ -6,11 +6,17 @@ use GuzzleHttp\Client;
 use SapientPro\EbayInventorySDK\Api\ApiInterface;
 use SapientPro\EbayInventorySDK\Client\EbayClient;
 use SapientPro\EbayInventorySDK\Client\Serializer;
+use SapientPro\EbayInventorySDK\Configuration;
 
 trait CreatesApiClass
 {
     public function createApi(string $class, Client $client): ApiInterface
     {
-        return new $class(new EbayClient($client, new Serializer()));
+        $configuration = (new Configuration())->setAccessToken('test');
+
+        $api = new $class($configuration);
+        $api->setEbayClient(new EbayClient($client, new Serializer()));
+
+        return $api;
     }
 }

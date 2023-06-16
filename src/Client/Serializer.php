@@ -10,7 +10,6 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Normalizer\PropertyNormalizer;
 use Symfony\Component\Serializer\Serializer as SymfonySerializer;
 
 class Serializer
@@ -38,6 +37,11 @@ class Serializer
     public function serialize(EbayModelInterface $class): string
     {
         return $this->serializer->serialize($class, JsonEncoder::FORMAT);
+    }
+
+    public function denormalize(array $data, string $type): ?EbayModelInterface
+    {
+        return $this->serializer->denormalize($data, $type);
     }
 
     public static function toPathValue(string $value): string

@@ -2,6 +2,7 @@
 
 namespace SapientPro\EbayInventorySDK\Models\Concerns;
 
+use SapientPro\EbayInventorySDK\Client\Serializer;
 use SapientPro\EbayInventorySDK\Models\EbayModelInterface;
 use SapientPro\EbayInventorySDK\Models\NonExistentPropertyException;
 
@@ -16,6 +17,20 @@ trait FillsModel
         }
 
         return $model;
+    }
+
+    public static function fromPlainArray(array $data): ?EbayModelInterface
+    {
+        $serializer = new Serializer();
+
+        return $serializer->denormalize($data, self::class);
+    }
+
+    public static function fromJson(string $json): ?EbayModelInterface
+    {
+        $serializer = new Serializer();
+
+        return $serializer->deserialize($json, self::class);
     }
 
     public function __set(string $name, mixed $value): void

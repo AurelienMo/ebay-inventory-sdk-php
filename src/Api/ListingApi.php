@@ -22,33 +22,35 @@ use InvalidArgumentException;
  */
 class ListingApi implements ApiInterface
 {
-    protected ClientInterface $client;
+    private EbayClient $ebayClient;
 
-    protected Configuration $config;
+    private EbayRequest $ebayRequest;
 
-    protected EbayClient $ebayClient;
+    private Configuration $config;
 
-    protected EbayRequest $ebayRequest;
+    public function __construct(Configuration $config)
+    {
+        $this->config = $config;
 
-    public function __construct(
-        EbayClient $ebayClient = null,
-        EbayRequest $ebayRequest = null,
-        ClientInterface $client = null,
-        Configuration $config = null,
-    ) {
         $serializer = new Serializer();
-        $this->client = $client ?: new Client();
-        $this->config = $config ?: new Configuration();
-        $this->ebayClient = $ebayClient ?: new EbayClient($this->client, $serializer);
-        $this->ebayRequest = $ebayRequest ?: new EbayRequest(new HeaderSelector(), $this->config, $serializer);
+        $client = new Client();
+
+        $this->ebayClient = new EbayClient($client, $serializer);
+        $this->ebayRequest = new EbayRequest(
+            new HeaderSelector(),
+            $this->config,
+            $serializer
+        );
     }
 
-    /**
-     * @return Configuration
-     */
     public function getConfig(): Configuration
     {
         return $this->config;
+    }
+
+    public function setEbayClient(EbayClient $ebayClient): void
+    {
+        $this->ebayClient = $ebayClient;
     }
 
     /**
