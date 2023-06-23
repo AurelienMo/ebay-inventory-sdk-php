@@ -77,7 +77,7 @@ class OfferApi implements ApiInterface
      * @return BulkOfferResponse
      * @throws ApiException on non-2xx response
      */
-    public function bulkCreateOffer(BulkEbayOfferDetailsWithKeys $body, LocaleEnum $contentLanguage): BulkOfferResponse
+    public function bulkCreateOffer(BulkEbayOfferDetailsWithKeys $body, string $contentLanguage): BulkOfferResponse
     {
         $response = $this->bulkCreateOfferWithHttpInfo($body, $contentLanguage);
 
@@ -93,7 +93,7 @@ class OfferApi implements ApiInterface
      * @throws InvalidArgumentException
      * @throws ApiException on non-2xx response
      */
-    public function bulkCreateOfferWithHttpInfo(BulkEbayOfferDetailsWithKeys $body, LocaleEnum $contentLanguage): array
+    public function bulkCreateOfferWithHttpInfo(BulkEbayOfferDetailsWithKeys $body, string $contentLanguage): array
     {
         $returnType = BulkOfferResponse::class;
         $request = $this->bulkCreateOfferRequest($body, $contentLanguage);
@@ -108,14 +108,14 @@ class OfferApi implements ApiInterface
      * @param  LocaleEnum  $contentLanguage
      * @return Request
      */
-    protected function bulkCreateOfferRequest(BulkEbayOfferDetailsWithKeys $body, LocaleEnum $contentLanguage): Request
+    protected function bulkCreateOfferRequest(BulkEbayOfferDetailsWithKeys $body, string $contentLanguage): Request
     {
         $resourcePath = '/bulk_create_offer';
 
         return $this->ebayRequest->postRequest(
             $resourcePath,
             $body,
-            headerParameters: ['Content-Language' => $contentLanguage->value]
+            headerParameters: ['Content-Language' => $contentLanguage]
         );
     }
 
@@ -171,12 +171,12 @@ class OfferApi implements ApiInterface
      * Operation createOffer
      *
      * @param  EbayOfferDetailsWithKeys  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      *
      * @return OfferResponse
      * @throws ApiException on non-2xx response
      */
-    public function createOffer(EbayOfferDetailsWithKeys $body, LocaleEnum $contentLanguage): OfferResponse
+    public function createOffer(EbayOfferDetailsWithKeys $body, string $contentLanguage): OfferResponse
     {
         $response = $this->createOfferWithHttpInfo($body, $contentLanguage);
 
@@ -187,12 +187,12 @@ class OfferApi implements ApiInterface
      * Operation createOfferWithHttpInfo
      *
      * @param  EbayOfferDetailsWithKeys  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      *
      * @return array of OfferResponse, HTTP status code, HTTP response headers (array of strings)
      * @throws ApiException on non-2xx response
      */
-    public function createOfferWithHttpInfo(EbayOfferDetailsWithKeys $body, LocaleEnum $contentLanguage): array
+    public function createOfferWithHttpInfo(EbayOfferDetailsWithKeys $body, string $contentLanguage): array
     {
         $returnType = OfferResponse::class;
         $request = $this->createOfferRequest($body, $contentLanguage);
@@ -204,18 +204,18 @@ class OfferApi implements ApiInterface
      * Create request for operation 'createOffer'
      *
      * @param  EbayOfferDetailsWithKeys  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      *
      * @return Request
      */
-    protected function createOfferRequest(EbayOfferDetailsWithKeys $body, LocaleEnum $contentLanguage): Request
+    protected function createOfferRequest(EbayOfferDetailsWithKeys $body, string $contentLanguage): Request
     {
         $resourcePath = '/offer';
 
         return $this->ebayRequest->postRequest(
             $resourcePath,
             $body,
-            headerParameters: ['Content-Language' => $contentLanguage->value]
+            headerParameters: ['Content-Language' => $contentLanguage]
         );
     }
 
@@ -552,7 +552,7 @@ class OfferApi implements ApiInterface
      * Operation updateOffer
      *
      * @param  EbayOfferDetailsWithId  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $offerId  The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. (required)
      *
      * @return OfferResponse
@@ -560,7 +560,7 @@ class OfferApi implements ApiInterface
      */
     public function updateOffer(
         EbayOfferDetailsWithId $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $offerId
     ): ?OfferResponse {
         $response = $this->updateOfferWithHttpInfo($body, $contentLanguage, $offerId);
@@ -572,7 +572,7 @@ class OfferApi implements ApiInterface
      * Operation updateOfferWithHttpInfo
      *
      * @param  EbayOfferDetailsWithId  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $offerId  The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. (required)
      *
      * @return array of \SapientPro\EbayInventorySDK\Model\OfferResponse, HTTP status code, HTTP response headers (array of strings)
@@ -580,7 +580,7 @@ class OfferApi implements ApiInterface
      */
     public function updateOfferWithHttpInfo(
         EbayOfferDetailsWithId $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $offerId
     ): array {
         $returnType = OfferResponse::class;
@@ -593,14 +593,14 @@ class OfferApi implements ApiInterface
      * Create request for operation 'updateOffer'
      *
      * @param  EbayOfferDetailsWithId  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $offerId  The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. (required)
      *
      * @return Request
      */
     protected function updateOfferRequest(
         EbayOfferDetailsWithId $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $offerId
     ): Request {
         $resourcePath = '/offer/{offerId}';
@@ -613,7 +613,7 @@ class OfferApi implements ApiInterface
         return $this->ebayRequest->putRequest(
             $body,
             $resourcePath,
-            headerParameters: ['Content-Language' => $contentLanguage->value]
+            headerParameters: ['Content-Language' => $contentLanguage]
         );
     }
 

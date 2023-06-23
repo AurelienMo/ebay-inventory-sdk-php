@@ -156,7 +156,7 @@ JSON;
         $client = $this->prepareClientMock(200, $mockResponse);
         $api = $this->createApi(InventoryItemApi::class, $client);
 
-        $result = $api->bulkCreateOrReplaceInventoryItem($requestBody, LocaleEnum::en_US);
+        $result = $api->bulkCreateOrReplaceInventoryItem($requestBody, 'en-US');
 
         $this->assertEquals($expectedResponse, $result);
     }
@@ -491,7 +491,7 @@ JSON;
 
         $result = $api->createOrReplaceInventoryItemWithHttpInfo(
             $requestBody,
-            LocaleEnum::en_US,
+            'en-US',
             'SKU123'
         );
 

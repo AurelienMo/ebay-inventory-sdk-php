@@ -58,7 +58,7 @@ class InventoryItemGroupApi implements ApiInterface
      * Operation createOrReplaceInventoryItemGroup
      *
      * @param  InventoryItemGroup  $body  Details of the inventory Item Group (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $inventoryItemGroupKey  Unique identifier of the inventory item group. This identifier is supplied by the seller. The &lt;strong&gt;inventoryItemGroupKey&lt;/strong&gt; value for the inventory item group to create/update is passed in at the end of the call URI. This value cannot be changed once it is set. (required)
      *
      * @return BaseResponse|null
@@ -66,7 +66,7 @@ class InventoryItemGroupApi implements ApiInterface
      */
     public function createOrReplaceInventoryItemGroup(
         InventoryItemGroup $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $inventoryItemGroupKey
     ): ?BaseResponse {
         $response = $this->createOrReplaceInventoryItemGroupWithHttpInfo(
@@ -82,7 +82,7 @@ class InventoryItemGroupApi implements ApiInterface
      * Operation createOrReplaceInventoryItemGroupWithHttpInfo
      *
      * @param  InventoryItemGroup  $body  Details of the inventory Item Group (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $inventoryItemGroupKey  Unique identifier of the inventory item group. This identifier is supplied by the seller. The &lt;strong&gt;inventoryItemGroupKey&lt;/strong&gt; value for the inventory item group to create/update is passed in at the end of the call URI. This value cannot be changed once it is set. (required)
      *
      * @return array of BaseResponse, HTTP status code, HTTP response headers (array of strings)
@@ -90,7 +90,7 @@ class InventoryItemGroupApi implements ApiInterface
      */
     public function createOrReplaceInventoryItemGroupWithHttpInfo(
         InventoryItemGroup $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $inventoryItemGroupKey
     ): array {
         $returnType = BaseResponse::class;
@@ -103,14 +103,14 @@ class InventoryItemGroupApi implements ApiInterface
      * Create request for operation 'createOrReplaceInventoryItemGroup'
      *
      * @param  InventoryItemGroup  $body  Details of the inventory Item Group (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $inventoryItemGroupKey  Unique identifier of the inventory item group. This identifier is supplied by the seller. The &lt;strong&gt;inventoryItemGroupKey&lt;/strong&gt; value for the inventory item group to create/update is passed in at the end of the call URI. This value cannot be changed once it is set. (required)
      *
      * @return Request
      */
     protected function createOrReplaceInventoryItemGroupRequest(
         InventoryItemGroup $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $inventoryItemGroupKey
     ): Request {
         $resourcePath = '/inventory_item_group/{inventoryItemGroupKey}';
@@ -123,7 +123,7 @@ class InventoryItemGroupApi implements ApiInterface
         return $this->ebayRequest->putRequest(
             $body,
             $resourcePath,
-            headerParameters: ['Content-Language' => $contentLanguage->value]
+            headerParameters: ['Content-Language' => $contentLanguage]
         );
     }
 

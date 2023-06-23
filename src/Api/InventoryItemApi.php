@@ -66,13 +66,13 @@ class InventoryItemApi implements ApiInterface
      * Operation bulkCreateOrReplaceInventoryItem
      *
      * @param  BulkInventoryItem  $body  Details of the inventories with sku and locale (required)
-     * @param  LocaleEnum  $contentLanguage
+     * @param  string  $contentLanguage
      * @return BulkInventoryItemResponse
      * @throws ApiException on non-2xx response
      */
     public function bulkCreateOrReplaceInventoryItem(
         BulkInventoryItem $body,
-        LocaleEnum $contentLanguage
+        string $contentLanguage
     ): BulkInventoryItemResponse {
         $response = $this->bulkCreateOrReplaceInventoryItemWithHttpInfo($body, $contentLanguage);
 
@@ -90,7 +90,7 @@ class InventoryItemApi implements ApiInterface
      */
     public function bulkCreateOrReplaceInventoryItemWithHttpInfo(
         BulkInventoryItem $body,
-        LocaleEnum $contentLanguage
+        string $contentLanguage
     ): array {
         $returnType = BulkInventoryItemResponse::class;
         $request = $this->bulkCreateOrReplaceInventoryItemRequest($body, $contentLanguage);
@@ -102,12 +102,12 @@ class InventoryItemApi implements ApiInterface
      * Create request for operation 'bulkCreateOrReplaceInventoryItem'
      *
      * @param  BulkInventoryItem  $body  Details of the inventories with sku and locale (required)
-     * @param  LocaleEnum  $contentLanguage
+     * @param  string  $contentLanguage
      * @return Request
      */
     protected function bulkCreateOrReplaceInventoryItemRequest(
         BulkInventoryItem $body,
-        LocaleEnum $contentLanguage
+        string $contentLanguage
     ): Request {
 
         $resourcePath = '/bulk_create_or_replace_inventory_item';
@@ -115,7 +115,7 @@ class InventoryItemApi implements ApiInterface
         return $this->ebayRequest->postRequest(
             $resourcePath,
             $body,
-            headerParameters: ['Content-Language' => $contentLanguage->value],
+            headerParameters: ['Content-Language' => $contentLanguage],
         );
     }
 
@@ -219,7 +219,7 @@ class InventoryItemApi implements ApiInterface
      * Operation createOrReplaceInventoryItem
      *
      * @param  InventoryItem  $body  Details of the inventory item record. (required)
-     * @param  LocaleEnum  $contentLanguage
+     * @param  string  $contentLanguage
      *  This request header sets the natural language that will be provided in the field values
      * of the request payload. (required)
      * @param  string  $sku
@@ -234,7 +234,7 @@ class InventoryItemApi implements ApiInterface
      */
     public function createOrReplaceInventoryItem(
         InventoryItem $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $sku
     ): ?BaseResponse {
         $response = $this->createOrReplaceInventoryItemWithHttpInfo($body, $contentLanguage, $sku);
@@ -246,7 +246,7 @@ class InventoryItemApi implements ApiInterface
      * Operation createOrReplaceInventoryItemWithHttpInfo
      *
      * @param  InventoryItem  $body  Details of the inventory item record. (required)
-     * @param  LocaleEnum  $contentLanguage
+     * @param  string  $contentLanguage
      *  This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $sku
      *  The seller-defined SKU value for the inventory item is required whether the seller is creating a new inventory item, or updating an existing inventory item. This SKU value is passed in at the end of the call URI. SKU values must be unique across the seller&#x27;s inventory. &lt;br/&gt;&lt;br/&gt; &lt;strong&gt;Max length&lt;/strong&gt;: 50. (required)
@@ -257,7 +257,7 @@ class InventoryItemApi implements ApiInterface
      */
     public function createOrReplaceInventoryItemWithHttpInfo(
         InventoryItem $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $sku
     ): array {
         $returnType = BaseResponse::class;
@@ -270,14 +270,14 @@ class InventoryItemApi implements ApiInterface
      * Create request for operation 'createOrReplaceInventoryItem'
      *
      * @param  InventoryItem  $body  Details of the inventory item record. (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param  string  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $sku  The seller-defined SKU value for the inventory item is required whether the seller is creating a new inventory item, or updating an existing inventory item. This SKU value is passed in at the end of the call URI. SKU values must be unique across the seller&#x27;s inventory. &lt;br/&gt;&lt;br/&gt; &lt;strong&gt;Max length&lt;/strong&gt;: 50. (required)
      *
      * @return Request
      */
     protected function createOrReplaceInventoryItemRequest(
         InventoryItem $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $sku
     ): Request {
         $resourcePath = '/inventory_item/{sku}';
@@ -290,7 +290,7 @@ class InventoryItemApi implements ApiInterface
         return $this->ebayRequest->putRequest(
             $body,
             $resourcePath,
-            headerParameters: ['Content-Language' => $contentLanguage->value],
+            headerParameters: ['Content-Language' => $contentLanguage],
         );
     }
 

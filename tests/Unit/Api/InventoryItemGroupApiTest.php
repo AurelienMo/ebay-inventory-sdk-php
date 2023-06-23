@@ -92,7 +92,7 @@ class InventoryItemGroupApiTest extends TestCase
 
         $result = $api->createOrReplaceInventoryItemGroupWithHttpInfo(
             $requestBody,
-            LocaleEnum::en_US,
+            'en-US',
             'id1'
         );
 

@@ -58,7 +58,7 @@ class ProductCompatibilityApi implements ApiInterface
      * Operation createOrReplaceProductCompatibility
      *
      * @param  Compatibility  $body  Details of the compatibility (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $sku  A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
      *
      * @return BaseResponse|null
@@ -66,7 +66,7 @@ class ProductCompatibilityApi implements ApiInterface
      */
     public function createOrReplaceProductCompatibility(
         Compatibility $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $sku
     ): ?BaseResponse {
         $response = $this->createOrReplaceProductCompatibilityWithHttpInfo($body, $contentLanguage, $sku);
@@ -78,7 +78,7 @@ class ProductCompatibilityApi implements ApiInterface
      * Operation createOrReplaceProductCompatibilityWithHttpInfo
      *
      * @param  Compatibility  $body  Details of the compatibility (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $sku  A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
      *
      * @return array of \SapientPro\EbayInventorySDK\Model\BaseResponse, HTTP status code, HTTP response headers (array of strings)
@@ -86,7 +86,7 @@ class ProductCompatibilityApi implements ApiInterface
      */
     public function createOrReplaceProductCompatibilityWithHttpInfo(
         Compatibility $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $sku
     ): array {
         $returnType = BaseResponse::class;
@@ -99,14 +99,14 @@ class ProductCompatibilityApi implements ApiInterface
      * Create request for operation 'createOrReplaceProductCompatibility'
      *
      * @param  Compatibility  $body  Details of the compatibility (required)
-     * @param  LocaleEnum  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $sku  A SKU (stock keeping unit) is an unique identifier defined by a seller for a product (required)
      *
      * @return Request
      */
     protected function createOrReplaceProductCompatibilityRequest(
         Compatibility $body,
-        LocaleEnum $contentLanguage,
+        string $contentLanguage,
         string $sku
     ): Request {
         $resourcePath = '/inventory_item/{sku}/product_compatibility';
@@ -119,7 +119,7 @@ class ProductCompatibilityApi implements ApiInterface
         return $this->ebayRequest->putRequest(
             $body,
             $resourcePath,
-            headerParameters: ['Content-Language' => $contentLanguage->value]
+            headerParameters: ['Content-Language' => $contentLanguage]
         );
     }
 

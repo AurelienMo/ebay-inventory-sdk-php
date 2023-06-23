@@ -47,6 +47,9 @@ try {
 }
 ```
 
+*Note*: Some methods require `$contentLanguage` argument. It's value should be of string type and correspond to the LocaleEnum cases, but should be in kebab case:
+LocaleEnum::en_US -> 'en-US'
+
 ## Creating Models
 
 Some SDK methods require `$body` variable as a parameter. It refers to a Model class that implements EbayModelInterface.

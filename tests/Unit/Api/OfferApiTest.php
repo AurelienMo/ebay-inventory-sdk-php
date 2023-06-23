@@ -195,7 +195,7 @@ JSON;
         $client = $this->prepareClientMock(200, $mockResponseBody);
         $api = $this->createApi(OfferApi::class, $client);
 
-        $response = $api->bulkCreateOffer($requestBody, LocaleEnum::en_US);
+        $response = $api->bulkCreateOffer($requestBody, 'en-US');
 
         $this->assertEquals($expectedResponse, $response);
     }
@@ -292,7 +292,7 @@ JSON;
         ]);
         $api = $this->createApi(OfferApi::class, $client);
 
-        $response = $api->createOffer($requestBody, LocaleEnum::en_US);
+        $response = $api->createOffer($requestBody, 'en-US');
 
         $this->assertEquals($expectedResponse, $response);
     }
@@ -699,7 +699,7 @@ JSON;
 
         $result = $api->updateOfferWithHttpInfo(
             $requestBody,
-            LocaleEnum::en_US,
+            'en-US',
             '3***********5'
         );
 
