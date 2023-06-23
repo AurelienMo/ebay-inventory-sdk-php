@@ -93,10 +93,9 @@ class InventoryItemGroupApi implements ApiInterface
         string $contentLanguage,
         string $inventoryItemGroupKey
     ): array {
-        $returnType = BaseResponse::class;
         $request = $this->createOrReplaceInventoryItemGroupRequest($body, $contentLanguage, $inventoryItemGroupKey);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BaseResponse::class);
     }
 
     /**
@@ -182,15 +181,14 @@ class InventoryItemGroupApi implements ApiInterface
      *
      * @param  string  $inventoryItemGroupKey  The unique identifier of an inventory item group. This value is assigned by the seller when an inventory item group is created. The &lt;strong&gt;inventoryItemGroupKey&lt;/strong&gt; value for the inventory item group to retrieve is passed in at the end of the call URI. (required)
      *
-     * @return InventoryItemGroup
-     * @throws InvalidArgumentException
+     * @return InventoryItemGroup|null
      * @throws ApiException on non-2xx response
      */
-    public function getInventoryItemGroup(string $inventoryItemGroupKey): InventoryItemGroup
+    public function getInventoryItemGroup(string $inventoryItemGroupKey): ?InventoryItemGroup
     {
         $response = $this->getInventoryItemGroupWithHttpInfo($inventoryItemGroupKey);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -204,10 +202,9 @@ class InventoryItemGroupApi implements ApiInterface
      */
     public function getInventoryItemGroupWithHttpInfo(string $inventoryItemGroupKey): array
     {
-        $returnType = InventoryItemGroup::class;
         $request = $this->getInventoryItemGroupRequest($inventoryItemGroupKey);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: InventoryItemGroup::class);
     }
 
     /**

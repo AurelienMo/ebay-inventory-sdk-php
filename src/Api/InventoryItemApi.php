@@ -67,16 +67,16 @@ class InventoryItemApi implements ApiInterface
      *
      * @param  BulkInventoryItem  $body  Details of the inventories with sku and locale (required)
      * @param  string  $contentLanguage
-     * @return BulkInventoryItemResponse
+     * @return BulkInventoryItemResponse|null
      * @throws ApiException on non-2xx response
      */
     public function bulkCreateOrReplaceInventoryItem(
         BulkInventoryItem $body,
         string $contentLanguage
-    ): BulkInventoryItemResponse {
+    ): ?BulkInventoryItemResponse {
         $response = $this->bulkCreateOrReplaceInventoryItemWithHttpInfo($body, $contentLanguage);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -92,10 +92,9 @@ class InventoryItemApi implements ApiInterface
         BulkInventoryItem $body,
         string $contentLanguage
     ): array {
-        $returnType = BulkInventoryItemResponse::class;
         $request = $this->bulkCreateOrReplaceInventoryItemRequest($body, $contentLanguage);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BulkInventoryItemResponse::class);
     }
 
     /**
@@ -109,7 +108,6 @@ class InventoryItemApi implements ApiInterface
         BulkInventoryItem $body,
         string $contentLanguage
     ): Request {
-
         $resourcePath = '/bulk_create_or_replace_inventory_item';
 
         return $this->ebayRequest->postRequest(
@@ -124,15 +122,14 @@ class InventoryItemApi implements ApiInterface
      *
      * @param  BulkGetInventoryItem  $body  Details of the inventories with sku and locale (required)
      *
-     * @return BulkGetInventoryItemResponse
-     * @throws InvalidArgumentException
+     * @return BulkGetInventoryItemResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function bulkGetInventoryItem(BulkGetInventoryItem $body): BulkGetInventoryItemResponse
+    public function bulkGetInventoryItem(BulkGetInventoryItem $body): ?BulkGetInventoryItemResponse
     {
         $response = $this->bulkGetInventoryItemWithHttpInfo($body);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -146,10 +143,9 @@ class InventoryItemApi implements ApiInterface
      */
     public function bulkGetInventoryItemWithHttpInfo(BulkGetInventoryItem $body): array
     {
-        $returnType = BulkGetInventoryItemResponse::class;
         $request = $this->bulkGetInventoryItemRequest($body);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BulkGetInventoryItemResponse::class);
     }
 
     /**
@@ -172,15 +168,14 @@ class InventoryItemApi implements ApiInterface
      *
      * @param  BulkPriceQuantity  $body  Price and allocation details for the given SKU and Marketplace (required)
      *
-     * @return BulkPriceQuantityResponse
-     * @throws InvalidArgumentException
+     * @return BulkPriceQuantityResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function bulkUpdatePriceQuantity(BulkPriceQuantity $body): BulkPriceQuantityResponse
+    public function bulkUpdatePriceQuantity(BulkPriceQuantity $body): ?BulkPriceQuantityResponse
     {
         $response = $this->bulkUpdatePriceQuantityWithHttpInfo($body);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -194,10 +189,9 @@ class InventoryItemApi implements ApiInterface
      */
     public function bulkUpdatePriceQuantityWithHttpInfo(BulkPriceQuantity $body): array
     {
-        $returnType = BulkPriceQuantityResponse::class;
         $request = $this->bulkUpdatePriceQuantityRequest($body);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BulkPriceQuantityResponse::class);
     }
 
     /**
@@ -260,10 +254,9 @@ class InventoryItemApi implements ApiInterface
         string $contentLanguage,
         string $sku
     ): array {
-        $returnType = BaseResponse::class;
         $request = $this->createOrReplaceInventoryItemRequest($body, $contentLanguage, $sku);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BaseResponse::class);
     }
 
     /**
@@ -350,15 +343,14 @@ class InventoryItemApi implements ApiInterface
      *
      * @param  string  $sku  This is the seller-defined SKU value of the product whose inventory item record you wish to retrieve.&lt;br/&gt;&lt;br/&gt;&lt;strong&gt;Max length&lt;/strong&gt;: 50. (required)
      *
-     * @return InventoryItemWithSkuLocaleGroupId
-     * @throws InvalidArgumentException
+     * @return InventoryItemWithSkuLocaleGroupId|null
      * @throws ApiException on non-2xx response
      */
-    public function getInventoryItem(string $sku): InventoryItemWithSkuLocaleGroupId
+    public function getInventoryItem(string $sku): ?InventoryItemWithSkuLocaleGroupId
     {
         $response = $this->getInventoryItemWithHttpInfo($sku);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -372,10 +364,9 @@ class InventoryItemApi implements ApiInterface
      */
     public function getInventoryItemWithHttpInfo(string $sku): array
     {
-        $returnType = InventoryItemWithSkuLocaleGroupId::class;
         $request = $this->getInventoryItemRequest($sku);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: InventoryItemWithSkuLocaleGroupId::class);
     }
 
     /**
@@ -404,15 +395,14 @@ class InventoryItemApi implements ApiInterface
      * @param  string|null  $limit  The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be an integer  from &lt;code&gt;1&lt;/code&gt; to &lt;code&gt;100&lt;/code&gt;. If this query parameter is not set, up to 100 records will be returned on each page of results.&lt;br/&gt;&lt;br/&gt;&lt;strong&gt;Min&lt;/strong&gt;: 1, &lt;strong&gt;Max&lt;/strong&gt;: 100 (optional)
      * @param  string|null  $offset  The value passed in this query parameter sets the page number to retrieve. The first page of records has a value of &lt;code&gt;0&lt;/code&gt;, the second page of records has a value of &lt;code&gt;1&lt;/code&gt;, and so on. If this query parameter is not set, its value defaults to &lt;code&gt;0&lt;/code&gt;, and the first page of records is returned. (optional)
      *
-     * @return InventoryItems
-     * @throws InvalidArgumentException
+     * @return InventoryItems|null
      * @throws ApiException on non-2xx response
      */
-    public function getInventoryItems(string $limit = null, string $offset = null): InventoryItems
+    public function getInventoryItems(string $limit = null, string $offset = null): ?InventoryItems
     {
         $response = $this->getInventoryItemsWithHttpInfo($limit, $offset);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -426,10 +416,9 @@ class InventoryItemApi implements ApiInterface
      */
     public function getInventoryItemsWithHttpInfo(string $limit = null, string $offset = null): array
     {
-        $returnType = InventoryItems::class;
         $request = $this->getInventoryItemsRequest($limit, $offset);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: InventoryItems::class);
     }
 
     /**

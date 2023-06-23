@@ -58,15 +58,14 @@ class ListingApi implements ApiInterface
      *
      * @param  BulkMigrateListing  $body  Details of the listings that needs to be migrated into Inventory (required)
      *
-     * @return BulkMigrateListingResponse
-     * @throws InvalidArgumentException
+     * @return BulkMigrateListingResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function bulkMigrateListing(BulkMigrateListing $body): BulkMigrateListingResponse
+    public function bulkMigrateListing(BulkMigrateListing $body): ?BulkMigrateListingResponse
     {
         $response = $this->bulkMigrateListingWithHttpInfo($body);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -79,10 +78,9 @@ class ListingApi implements ApiInterface
      */
     public function bulkMigrateListingWithHttpInfo(BulkMigrateListing $body): array
     {
-        $returnType = BulkMigrateListingResponse::class;
         $request = $this->bulkMigrateListingRequest($body);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BulkMigrateListingResponse::class);
     }
 
     /**

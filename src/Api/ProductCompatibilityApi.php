@@ -89,10 +89,9 @@ class ProductCompatibilityApi implements ApiInterface
         string $contentLanguage,
         string $sku
     ): array {
-        $returnType = BaseResponse::class;
         $request = $this->createOrReplaceProductCompatibilityRequest($body, $contentLanguage, $sku);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BaseResponse::class);
     }
 
     /**
@@ -178,15 +177,14 @@ class ProductCompatibilityApi implements ApiInterface
      *
      * @param  string  $sku  A SKU (stock keeping unit) is an unique identifier defined by a seller for a product
      *
-     * @return Compatibility
-     * @throws InvalidArgumentException
+     * @return Compatibility|null
      * @throws ApiException on non-2xx response
      */
-    public function getProductCompatibility(string $sku): Compatibility
+    public function getProductCompatibility(string $sku): ?Compatibility
     {
         $response = $this->getProductCompatibilityWithHttpInfo($sku);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -200,10 +198,9 @@ class ProductCompatibilityApi implements ApiInterface
      */
     public function getProductCompatibilityWithHttpInfo(string $sku): array
     {
-        $returnType = Compatibility::class;
         $request = $this->getProductCompatibilityRequest($sku);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: Compatibility::class);
     }
 
     /**

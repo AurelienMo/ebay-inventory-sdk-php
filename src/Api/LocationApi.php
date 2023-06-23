@@ -261,15 +261,14 @@ class LocationApi implements ApiInterface
      *
      * @param  string  $merchantLocationKey  A unique merchant-defined key (ID) for an inventory location. This value is passed in at the end of the call URI to specify the inventory location to retrieve. &lt;br&gt;&lt;br&gt;&lt;b&gt;Max length&lt;/b&gt;: 36 (required)
      *
-     * @return InventoryLocationResponse
-     * @throws InvalidArgumentException
+     * @return InventoryLocationResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function getInventoryLocation(string $merchantLocationKey): InventoryLocationResponse
+    public function getInventoryLocation(string $merchantLocationKey): ?InventoryLocationResponse
     {
         $response = $this->getInventoryLocationWithHttpInfo($merchantLocationKey);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -283,10 +282,9 @@ class LocationApi implements ApiInterface
      */
     public function getInventoryLocationWithHttpInfo(string $merchantLocationKey): array
     {
-        $returnType = InventoryLocationResponse::class;
         $request = $this->getInventoryLocationRequest($merchantLocationKey);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: InventoryLocationResponse::class);
     }
 
     /**
@@ -315,14 +313,14 @@ class LocationApi implements ApiInterface
      * @param  int|null  $limit  The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results. &lt;br&gt;&lt;br&gt; &lt;strong&gt;Min&lt;/strong&gt;: 1 (optional)
      * @param  int|null  $offset  Specifies the number of locations to skip in the result set before returning the first location in the paginated response.  &lt;p&gt;Combine &lt;b&gt;offset&lt;/b&gt; with the &lt;b&gt;limit&lt;/b&gt; query parameter to control the items returned in the response. For example, if you supply an &lt;b&gt;offset&lt;/b&gt; of &lt;code&gt;0&lt;/code&gt; and a &lt;b&gt;limit&lt;/b&gt; of &lt;code&gt;10&lt;/code&gt;, the first page of the response contains the first 10 items from the complete list of items retrieved by the call. If &lt;b&gt;offset&lt;/b&gt; is &lt;code&gt;10&lt;/code&gt; and &lt;b&gt;limit&lt;/b&gt; is &lt;code&gt;20&lt;/code&gt;, the first page of the response contains items 11-30 from the complete result set.&lt;/p&gt; &lt;p&gt;&lt;b&gt;Default:&lt;/b&gt; 0&lt;/p&gt; (optional)
      *
-     * @return LocationResponse
+     * @return LocationResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function getInventoryLocations(int $limit = null, int $offset = null): LocationResponse
+    public function getInventoryLocations(int $limit = null, int $offset = null): ?LocationResponse
     {
         $response = $this->getInventoryLocationsWithHttpInfo($limit, $offset);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -336,10 +334,9 @@ class LocationApi implements ApiInterface
      */
     public function getInventoryLocationsWithHttpInfo(int $limit = null, int $offset = null): array
     {
-        $returnType = LocationResponse::class;
         $request = $this->getInventoryLocationsRequest($limit, $offset);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: LocationResponse::class);
     }
 
     /**

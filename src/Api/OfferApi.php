@@ -8,7 +8,6 @@ use SapientPro\EbayInventorySDK\Client\EbayRequest;
 use SapientPro\EbayInventorySDK\Client\Serializer;
 use SapientPro\EbayInventorySDK\Configuration;
 use SapientPro\EbayInventorySDK\Enums\FormatTypeEnum;
-use SapientPro\EbayInventorySDK\Enums\LocaleEnum;
 use SapientPro\EbayInventorySDK\Enums\MarketplaceEnum;
 use SapientPro\EbayInventorySDK\HeaderSelector;
 use SapientPro\EbayInventorySDK\Models\BulkEbayOfferDetailsWithKeys;
@@ -27,7 +26,6 @@ use SapientPro\EbayInventorySDK\Models\PublishResponse;
 use SapientPro\EbayInventorySDK\Models\WithdrawByInventoryItemGroupRequest;
 use SapientPro\EbayInventorySDK\Models\WithdrawResponse;
 use GuzzleHttp\Client;
-use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\Request;
 use InvalidArgumentException;
 
@@ -73,15 +71,15 @@ class OfferApi implements ApiInterface
      * Operation bulkCreateOffer
      *
      * @param  BulkEbayOfferDetailsWithKeys  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage
-     * @return BulkOfferResponse
+     * @param  string  $contentLanguage
+     * @return BulkOfferResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function bulkCreateOffer(BulkEbayOfferDetailsWithKeys $body, string $contentLanguage): BulkOfferResponse
+    public function bulkCreateOffer(BulkEbayOfferDetailsWithKeys $body, string $contentLanguage): ?BulkOfferResponse
     {
         $response = $this->bulkCreateOfferWithHttpInfo($body, $contentLanguage);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -95,17 +93,16 @@ class OfferApi implements ApiInterface
      */
     public function bulkCreateOfferWithHttpInfo(BulkEbayOfferDetailsWithKeys $body, string $contentLanguage): array
     {
-        $returnType = BulkOfferResponse::class;
         $request = $this->bulkCreateOfferRequest($body, $contentLanguage);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BulkOfferResponse::class);
     }
 
     /**
      * Create request for operation 'bulkCreateOffer'
      *
      * @param  BulkEbayOfferDetailsWithKeys  $body  Details of the offer for the channel (required)
-     * @param  LocaleEnum  $contentLanguage
+     * @param  string  $contentLanguage
      * @return Request
      */
     protected function bulkCreateOfferRequest(BulkEbayOfferDetailsWithKeys $body, string $contentLanguage): Request
@@ -124,15 +121,14 @@ class OfferApi implements ApiInterface
      *
      * @param  BulkOffer  $body  The base request of the &lt;strong&gt;bulkPublishOffer&lt;/strong&gt; method. (required)
      *
-     * @return BulkPublishResponse
-     * @throws InvalidArgumentException
+     * @return BulkPublishResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function bulkPublishOffer(BulkOffer $body): BulkPublishResponse
+    public function bulkPublishOffer(BulkOffer $body): ?BulkPublishResponse
     {
         $response = $this->bulkPublishOfferWithHttpInfo($body);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -146,10 +142,9 @@ class OfferApi implements ApiInterface
      */
     public function bulkPublishOfferWithHttpInfo(BulkOffer $body): array
     {
-        $returnType = BulkPublishResponse::class;
         $request = $this->bulkPublishOfferRequest($body);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: BulkPublishResponse::class);
     }
 
     /**
@@ -171,16 +166,16 @@ class OfferApi implements ApiInterface
      * Operation createOffer
      *
      * @param  EbayOfferDetailsWithKeys  $body  Details of the offer for the channel (required)
-     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param  string  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
      *
-     * @return OfferResponse
+     * @return OfferResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function createOffer(EbayOfferDetailsWithKeys $body, string $contentLanguage): OfferResponse
+    public function createOffer(EbayOfferDetailsWithKeys $body, string $contentLanguage): ?OfferResponse
     {
         $response = $this->createOfferWithHttpInfo($body, $contentLanguage);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -194,10 +189,9 @@ class OfferApi implements ApiInterface
      */
     public function createOfferWithHttpInfo(EbayOfferDetailsWithKeys $body, string $contentLanguage): array
     {
-        $returnType = OfferResponse::class;
         $request = $this->createOfferRequest($body, $contentLanguage);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: OfferResponse::class);
     }
 
     /**
@@ -274,15 +268,14 @@ class OfferApi implements ApiInterface
      *
      * @param  OfferKeysWithId  $body  List of offers that needs fee information
      *
-     * @return FeesSummaryResponse
-     * @throws InvalidArgumentException
+     * @return FeesSummaryResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function getListingFees(OfferKeysWithId $body): FeesSummaryResponse
+    public function getListingFees(OfferKeysWithId $body): ?FeesSummaryResponse
     {
         $response = $this->getListingFeesWithHttpInfo($body);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -296,10 +289,9 @@ class OfferApi implements ApiInterface
      */
     public function getListingFeesWithHttpInfo(OfferKeysWithId $body): array
     {
-        $returnType = FeesSummaryResponse::class;
         $request = $this->getListingFeesRequest($body);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: FeesSummaryResponse::class);
     }
 
     /**
@@ -322,15 +314,14 @@ class OfferApi implements ApiInterface
      *
      * @param  string  $offerId  The unique identifier of the offer that is to be retrieved. (required)
      *
-     * @return EbayOfferDetailsWithAll
-     * @throws InvalidArgumentException
+     * @return EbayOfferDetailsWithAll|null
      * @throws ApiException on non-2xx response
      */
-    public function getOffer(string $offerId): EbayOfferDetailsWithAll
+    public function getOffer(string $offerId): ?EbayOfferDetailsWithAll
     {
         $response = $this->getOfferWithHttpInfo($offerId);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -344,10 +335,9 @@ class OfferApi implements ApiInterface
      */
     public function getOfferWithHttpInfo(string $offerId): array
     {
-        $returnType = EbayOfferDetailsWithAll::class;
         $request = $this->getOfferRequest($offerId);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: EbayOfferDetailsWithAll::class);
     }
 
     /**
@@ -376,9 +366,9 @@ class OfferApi implements ApiInterface
      * @param  string  $sku  The seller-defined SKU value is passed in as a query parameter. All offers associated with this product are returned in the response.&lt;br/&gt;&lt;br/&gt; &lt;strong&gt;Max length&lt;/strong&gt;: 50.
      * @param  FormatTypeEnum|null  $format  This enumeration value sets the listing format for the offer. This query parameter will be passed in if the seller only wants to see offers in this specified listing format. (optional)
      * @param  MarketplaceEnum|null  $marketplaceId  The unique identifier of the eBay marketplace. This query parameter will be passed in if the seller only wants to see the product&#x27;s offers on a specific eBay marketplace.&lt;br /&gt;&lt;br /&gt;&lt;span class&#x3D;\&quot;tablenote\&quot;&gt;&lt;strong&gt;Note:&lt;/strong&gt; At this time, the same SKU value can not be offered across multiple eBay marketplaces, so the &lt;strong&gt;marketplace_id&lt;/strong&gt; query parameter currently does not have any practical use for this call.&lt;/span&gt; (optional)
-     * @param  string|null  $offset  The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than &lt;code&gt;0&lt;/code&gt;. The first page of records has a value of &lt;code&gt;0&lt;/code&gt;, the second page of records has a value of &lt;code&gt;1&lt;/code&gt;, and so on. If this query parameter is not set, its value defaults to &lt;code&gt;0&lt;/code&gt;, and the first page of records is returned. (optional)
      * @param  string|null  $limit  The value passed in this query parameter sets the maximum number of records to return per page of data. Although this field is a string, the value passed in this field should be a positive integer value. If this query parameter is not set, up to 100 records will be returned on each page of results. (optional)
-     * @return Offers
+     * @param  string|null  $offset  The value passed in this query parameter sets the page number to retrieve. Although this field is a string, the value passed in this field should be a integer value equal to or greater than &lt;code&gt;0&lt;/code&gt;. The first page of records has a value of &lt;code&gt;0&lt;/code&gt;, the second page of records has a value of &lt;code&gt;1&lt;/code&gt;, and so on. If this query parameter is not set, its value defaults to &lt;code&gt;0&lt;/code&gt;, and the first page of records is returned. (optional)
+     * @return Offers|null
      * @throws ApiException on non-2xx response
      */
     public function getOffers(
@@ -387,10 +377,10 @@ class OfferApi implements ApiInterface
         MarketplaceEnum $marketplaceId = null,
         string $limit = null,
         string $offset = null
-    ): Offers {
+    ): ?Offers {
         $response = $this->getOffersWithHttpInfo($sku, $format, $marketplaceId, $limit, $offset);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -411,10 +401,9 @@ class OfferApi implements ApiInterface
         string $limit = null,
         string $offset = null
     ): array {
-        $returnType = Offers::class;
         $request = $this->getOffersRequest($sku, $format, $marketplaceId, $limit, $offset);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: Offers::class);
     }
 
     /**
@@ -452,15 +441,14 @@ class OfferApi implements ApiInterface
      *
      * @param  string  $offerId  The unique identifier of the offer that is to be published. (required)
      *
-     * @return PublishResponse
-     * @throws InvalidArgumentException
+     * @return PublishResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function publishOffer(string $offerId): PublishResponse
+    public function publishOffer(string $offerId): ?PublishResponse
     {
         $response = $this->publishOfferWithHttpInfo($offerId);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -474,10 +462,9 @@ class OfferApi implements ApiInterface
      */
     public function publishOfferWithHttpInfo(string $offerId): array
     {
-        $returnType = PublishResponse::class;
         $request = $this->publishOfferRequest($offerId);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: PublishResponse::class);
     }
 
     /**
@@ -505,15 +492,14 @@ class OfferApi implements ApiInterface
      *
      * @param  PublishByInventoryItemGroupRequest  $body  The identifier of the inventory item group to publish and the eBay marketplace where the listing will be published is needed in the request payload. (required)
      *
-     * @return PublishResponse
-     * @throws InvalidArgumentException
+     * @return PublishResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function publishOfferByInventoryItemGroup(PublishByInventoryItemGroupRequest $body): PublishResponse
+    public function publishOfferByInventoryItemGroup(PublishByInventoryItemGroupRequest $body): ?PublishResponse
     {
         $response = $this->publishOfferByInventoryItemGroupWithHttpInfo($body);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -527,10 +513,9 @@ class OfferApi implements ApiInterface
      */
     public function publishOfferByInventoryItemGroupWithHttpInfo(PublishByInventoryItemGroupRequest $body): array
     {
-        $returnType = PublishResponse::class;
         $request = $this->publishOfferByInventoryItemGroupRequest($body);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: PublishResponse::class);
     }
 
     /**
@@ -552,10 +537,10 @@ class OfferApi implements ApiInterface
      * Operation updateOffer
      *
      * @param  EbayOfferDetailsWithId  $body  Details of the offer for the channel (required)
-     * @param string $contentLanguage This request header sets the natural language that will be provided in the field values of the request payload. (required)
+     * @param  string  $contentLanguage  This request header sets the natural language that will be provided in the field values of the request payload. (required)
      * @param  string  $offerId  The unique identifier of the offer that is being updated. This identifier is passed in at the end of the call URI. (required)
      *
-     * @return OfferResponse
+     * @return OfferResponse|null
      * @throws ApiException on non-2xx response
      */
     public function updateOffer(
@@ -583,10 +568,9 @@ class OfferApi implements ApiInterface
         string $contentLanguage,
         string $offerId
     ): array {
-        $returnType = OfferResponse::class;
         $request = $this->updateOfferRequest($body, $contentLanguage, $offerId);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: OfferResponse::class);
     }
 
     /**
@@ -622,15 +606,14 @@ class OfferApi implements ApiInterface
      *
      * @param  string  $offerId  The unique identifier of the offer that is to be withdrawn. This value is passed into the path of the call URI. (required)
      *
-     * @return WithdrawResponse
-     * @throws InvalidArgumentException
+     * @return WithdrawResponse|null
      * @throws ApiException on non-2xx response
      */
-    public function withdrawOffer(string $offerId): WithdrawResponse
+    public function withdrawOffer(string $offerId): ?WithdrawResponse
     {
         $response = $this->withdrawOfferWithHttpInfo($offerId);
 
-        return $response['data'];
+        return $response['data'] ?? null;
     }
 
     /**
@@ -644,10 +627,9 @@ class OfferApi implements ApiInterface
      */
     public function withdrawOfferWithHttpInfo(string $offerId): array
     {
-        $returnType = WithdrawResponse::class;
         $request = $this->withdrawOfferRequest($offerId);
 
-        return $this->ebayClient->sendRequest($request, $returnType);
+        return $this->ebayClient->sendRequest($request, returnType: WithdrawResponse::class);
     }
 
     /**
