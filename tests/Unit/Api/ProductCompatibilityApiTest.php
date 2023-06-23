@@ -71,7 +71,7 @@ class ProductCompatibilityApiTest extends TestCase
         $client = $this->prepareClientMock(200);
         $api = $this->createApi(ProductCompatibilityApi::class, $client);
 
-        $result = $api->createOrReplaceProductCompatibilityWithHttpInfo($requestBody, LocaleEnum::en_US, '1234567890');
+        $result = $api->createOrReplaceProductCompatibilityWithHttpInfo($requestBody, 'en_US', '1234567890');
 
         $this->assertEquals(200, $result['code']);
     }
