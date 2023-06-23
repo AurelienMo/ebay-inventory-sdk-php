@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used to specify the quantity of the inventory items that are available for purchase
@@ -19,14 +20,16 @@ class AvailabilityWithAll implements EbayModelInterface
      * where the inventory item is available for in-store pickup.
      * <br><br>The store ID, the quantity available, and the fulfillment time
      * (how soon the item will be ready for pickup after the order occurs) are all returned in this container.
-     * @var PickupAtLocationAvailability[]
+     * @var PickupAtLocationAvailability[]|null
      */
-    public array $pickupAtLocationAvailability;
+    #[Assert\Type('array')]
+    public ?array $pickupAtLocationAvailability = null;
 
     /**
      * This container specifies the quantity of the inventory items that are available for a standard purchase,
      * where the item is shipped to the buyer.
-     * @var ShipToLocationAvailabilityWithAll
+     * @var ShipToLocationAvailabilityWithAll|null
      */
-    public ShipToLocationAvailabilityWithAll $shipToLocationAvailability;
+    #[Assert\Type(ShipToLocationAvailabilityWithAll::class)]
+    public ?ShipToLocationAvailabilityWithAll $shipToLocationAvailability = null;
 }

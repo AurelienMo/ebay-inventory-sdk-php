@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\LengthUnitOfMeasureEnum;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used to specify the dimensions (and the unit used to measure those dimensions) of a shipping package.
@@ -14,10 +15,12 @@ use SapientPro\EbayInventorySDK\Enums\LengthUnitOfMeasureEnum;
 class Dimension implements EbayModelInterface
 {
     /** The actual height (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. <br><br> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height, the <strong>dimensions</strong> container would look as follows: <br> <pre><code>"dimensions": {<br> "length": 21.5,<br> "width": 15.0,<br> "height": 12.0,<br> "unit": "INCH"<br> } </pre></code> */
-    public float $height;
+    #[Assert\Type('float')]
+    public ?float $height = null;
 
     /** The actual length (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified. <br><br> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height,  the <strong>dimensions</strong> container would look as follows: <br> <pre><code>"dimensions": {<br> "length": 21.5,<br> "width": 15.0,<br> "height": 12.0,<br> "unit": "INCH"<br> } </pre></code> */
-    public float $length;
+    #[Assert\Type('float')]
+    public ?float $length = null;
 
     /**
      * The unit of measurement used to specify the dimensions of a shipping package.
@@ -30,10 +33,12 @@ class Dimension implements EbayModelInterface
      * For implementation help, refer to
      * https://developer.ebay.com/api-docs/sell/inventory/types/slr:LengthUnitOfMeasureEnum
      *
-     * @var LengthUnitOfMeasureEnum
+     * @var LengthUnitOfMeasureEnum|null
      */
-    public LengthUnitOfMeasureEnum $unit;
+    #[Assert\Type(LengthUnitOfMeasureEnum::class)]
+    public ?LengthUnitOfMeasureEnum $unit = null;
 
     /** The actual width (in the measurement unit specified in the <strong>unit</strong> field) of the shipping package. All fields of the <strong>dimensions</strong> container are required if package dimensions are specified.<br><br> If a shipping package measured 21.5 inches in length, 15.0 inches in width, and 12.0 inches in height,  the <strong>dimensions</strong> container would look as follows: <br> <pre><code>"dimensions": {<br> "length": 21.5,<br> "width": 15.0,<br> "height": 12.0,<br> "unit": "INCH"<br> } </pre></code> */
-    public float $width;
+    #[Assert\Type('float')]
+    public ?float $width = null;
 }

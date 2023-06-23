@@ -2,7 +2,6 @@
 
 namespace SapientPro\EbayInventorySDK\Client;
 
-use GuzzleHttp\Client;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;

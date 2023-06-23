@@ -4,6 +4,7 @@ namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\ListingStatusEnum;
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used by the <strong>listing</strong> container in the <strong>getOffer</strong> and
@@ -16,7 +17,8 @@ class ListingDetails implements EbayModelInterface
     use FillsModel;
 
     /** The unique identifier of the eBay listing that is associated with the published offer. */
-    public string $listingId;
+    #[Assert\Type('string')]
+    public ?string $listingId = null;
 
     /**
      * The enumeration value returned in this field indicates the status of the listing that is associated
@@ -25,10 +27,12 @@ class ListingDetails implements EbayModelInterface
      * For implementation help, refer to
      * <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:ListingStatusEnum'>eBay API documentation</a>
      *
-     * @var ListingStatusEnum
+     * @var ListingStatusEnum|null
      */
-    public ListingStatusEnum $listingStatus;
+    #[Assert\Type(ListingStatusEnum::class)]
+    public ?ListingStatusEnum $listingStatus = null;
 
     /** This integer value indicates the quantity of the product that has been sold for the published offer. */
-    public int $soldQuantity;
+    #[Assert\Type('int')]
+    public ?int $soldQuantity = null;
 }

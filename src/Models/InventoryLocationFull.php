@@ -5,6 +5,7 @@ namespace SapientPro\EbayInventorySDK\Models;
 use SapientPro\EbayInventorySDK\Enums\StatusEnum;
 use SapientPro\EbayInventorySDK\Enums\StoreTypeEnum;
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used by the <strong>createInventoryLocation</strong> call to provide details on the
@@ -26,13 +27,16 @@ class InventoryLocationFull implements EbayModelInterface
      *
      * @var LocationDetails
      */
+    #[Assert\Type(LocationDetails::class)]
     public LocationDetails $location;
 
     /** This text field is used by the merchant to provide additional information about an inventory location. <br><br><b>Max length</b>: 256 */
-    public string $locationAdditionalInformation;
+    #[Assert\Type('string')]
+    public ?string $locationAdditionalInformation = null;
 
     /** This text field is generally used by the merchant to provide special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). <br><br> */
-    public string $locationInstructions;
+    #[Assert\Type('string')]
+    public ?string $locationInstructions = null;
 
     /**
      * This container is used to define the function of the inventory location. Typically, an inventory
@@ -46,12 +50,14 @@ class InventoryLocationFull implements EbayModelInterface
      *
      * <b>Default</b>: WAREHOUSE
      *
-     * @var StoreTypeEnum[]
+     * @var StoreTypeEnum[]|null
      */
-    public array $locationTypes;
+    #[Assert\Type('array')]
+    public ?array $locationTypes = null;
 
     /** This text field is used by the merchant to provide the Website address (URL) associated with the inventory location. <br><br><b>Max length</b>: 512 */
-    public string $locationWebUrl;
+    #[Assert\Type('string')]
+    public ?string $locationWebUrl = null;
 
     /**
      * This field is used to indicate whether the inventory location will be enabled
@@ -69,12 +75,14 @@ class InventoryLocationFull implements EbayModelInterface
      * For implementation help, refer to
      * <a href='https://developer.ebay.com/api-docs/sell/inventory/types/api:StatusEnum'>eBay API documentation</a>
      *
-     * @var StatusEnum
+     * @var StatusEnum|null
      */
-    public StatusEnum $merchantLocationStatus;
+    #[Assert\Type(StatusEnum::class)]
+    public ?StatusEnum $merchantLocationStatus = null;
 
     /** The name of the inventory location. This name should be a human-friendly name as it will be displayed in In-Store Pickup and Click and Collect listings. A name is not required for warehouse inventory locations. For store inventory locations, this field is not immediately required, but will be required before an offer enabled with the In-Store Pickup or Click and Collect capability can be published. So, if the seller omits this field in a <strong>createInventoryLocation</strong> call, it becomes required for an <strong>updateInventoryLocation</strong> call.<br><br><b>Max length</b>: 1000 */
-    public string $name;
+    #[Assert\Type('string')]
+    public ?string $name = null;
 
     /**
      * Although not technically required, this container is highly recommended to be used to specify
@@ -83,19 +91,22 @@ class InventoryLocationFull implements EbayModelInterface
      * field and an <strong>intervals</strong> container will be needed for each day of the week that
      * the store location is open.
      *
-     * @var OperatingHours[]
+     * @var OperatingHours[]|null
      */
-    public array $operatingHours;
+    #[Assert\Type('array')]
+    public ?array $operatingHours = null;
 
     /** Although not technically required, this field is highly recommended to be used to specify the phone number for a store inventory location. <br><br><b>Max length</b>: 36 */
-    public string $phone;
+    #[Assert\Type('string')]
+    public ?string $phone = null;
 
     /**
      * This container is used to express the special operating hours for a store inventory location on a
      * specific date, such as a holiday. The special hours specified for the specific date will override
      * the normal operating hours for that particular day of the week.
      *
-     * @var SpecialHours[]
+     * @var SpecialHours[]|null
      */
-    public array $specialHours;
+    #[Assert\Type('array')]
+    public ?array $specialHours = null;
 }

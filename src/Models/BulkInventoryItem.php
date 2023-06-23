@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * The base request of the <strong>bulkCreateOrReplaceInventoryItem</strong> method.
@@ -17,5 +18,6 @@ class BulkInventoryItem implements EbayModelInterface
      * with one <strong>bulkCreateOrReplaceInventoryItem</strong> call.
      * @var InventoryItemWithSkuLocale[]
      */
+    #[Assert\Type('array')]
     public array $requests;
 }

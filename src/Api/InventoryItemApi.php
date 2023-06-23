@@ -444,16 +444,11 @@ class InventoryItemApi implements ApiInterface
     {
         $resourcePath = '/inventory_item';
 
-        $queryParams = null;
+        $queryParameters = [
+            'limit' => $limit,
+            'offset' => $offset,
+        ];
 
-        if (null !== $limit) {
-            $queryParams['limit'] = Serializer::toQueryValue($limit);
-        }
-
-        if (null !== $offset) {
-            $queryParams['offset'] = Serializer::toQueryValue($offset);
-        }
-
-        return $this->ebayRequest->getRequest($resourcePath, $queryParams);
+        return $this->ebayRequest->getRequest($resourcePath, $queryParameters);
     }
 }

@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used by the base request payload of the <strong>bulkUpdatePriceQuantity</strong> call.
@@ -19,5 +20,6 @@ class BulkPriceQuantity implements EbayModelInterface
      * (up to 25) and/or to update the price and/or quantity of one or more specific published offers.
      * @var PriceQuantity[]
      */
+    #[Assert\Type('array')]
     public array $requests;
 }

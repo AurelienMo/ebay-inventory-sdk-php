@@ -5,6 +5,7 @@ namespace SapientPro\EbayInventorySDK\Models;
 use SapientPro\EbayInventorySDK\Enums\ConditionEnum;
 use SapientPro\EbayInventorySDK\Enums\LocaleEnum;
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class InventoryItemWithSkuLocaleGroupId implements EbayModelInterface
 {
@@ -15,9 +16,10 @@ class InventoryItemWithSkuLocaleGroupId implements EbayModelInterface
      * if the item will be shipped to the buyer, and the quantity of the inventory item that is available
      * for In-Store Pickup at one or more of the merchant's physical stores.
      *
-     * @var AvailabilityWithAll
+     * @var AvailabilityWithAll|null
      */
-    public AvailabilityWithAll $availability;
+    #[Assert\Type(AvailabilityWithAll::class)]
+    public ?AvailabilityWithAll $availability = null;
 
     /**
      * This enumeration value indicates the condition of the item. Supported item condition values will
@@ -49,21 +51,24 @@ class InventoryItemWithSkuLocaleGroupId implements EbayModelInterface
      * For implementation help, refer to
      * <a href='https://developer.ebay.com/api-docs/sell/inventory/types/slr:ConditionEnum'>eBay API documentation</a>
      *
-     * * @var ConditionEnum
+     * * @var ConditionEnum|null
      */
-    public ConditionEnum $condition;
+    #[Assert\Type(ConditionEnum::class)]
+    public ?ConditionEnum $condition = null;
 
     /** This string field is used by the seller to more clearly describe the condition of used items, or items that are not 'Brand New', 'New with tags', or 'New in box'. The ConditionDescription field is available for all categories. If the ConditionDescription field is used with an item in a new condition (Condition IDs 1000-1499), eBay will simply ignore this field if included, and eBay will return a warning message to the user. This field should only be used to further clarify the condition of the used item. It should not be used for branding, promotions, shipping, returns, payment or other information unrelated to the condition of the item. Make sure that the condition value, condition description, listing description, and the item's pictures do not contradict one another.<br><br><strong>Max length</strong>/: 1000. */
-    public string $conditionDescription;
+    #[Assert\Type('string')]
+    public ?string $conditionDescription = null;
 
     /**
      * This array is returned if the inventory item is associated with any inventory item group(s).
      * The value(s) returned in this array are the unique identifier(s) of the inventory item group(s).
      * This array is not returned if the inventory item is not associated with any inventory item groups.
      *
-     * @var string[]
+     * @var string[]|null
      */
-    public array $groupIds;
+    #[Assert\Type('array')]
+    public ?array $groupIds = null;
 
     /**
      * This array is returned if the inventory item is associated with any inventory item group(s).
@@ -71,9 +76,10 @@ class InventoryItemWithSkuLocaleGroupId implements EbayModelInterface
      * in a multiple-variation listing. This array is not returned if the inventory item is not associated
      * with any inventory item groups.
      *
-     * @var string[]
+     * @var string[]|null
      */
-    public array $inventoryItemGroupKeys;
+    #[Assert\Type('array')]
+    public ?array $inventoryItemGroupKeys = null;
 
     /**
      * This field returns the natural language that was provided in the field values of the request payload
@@ -82,13 +88,15 @@ class InventoryItemWithSkuLocaleGroupId implements EbayModelInterface
      *
      * @var LocaleEnum
      */
+    #[Assert\Type(LocaleEnum::class)]
     public LocaleEnum $locale;
 
     /**
      * This container is used to specify the dimensions and weight of a shipping package.
-     * @var PackageWeightAndSize
+     * @var PackageWeightAndSize|null
      */
-    public PackageWeightAndSize $packageWeightAndSize;
+    #[Assert\Type(PackageWeightAndSize::class)]
+    public ?PackageWeightAndSize $packageWeightAndSize = null;
 
     /**
      * This container is used in a <strong>createOrReplaceInventoryItem</strong> call to pass in a Global
@@ -97,10 +105,12 @@ class InventoryItemWithSkuLocaleGroupId implements EbayModelInterface
      * the inventory item is automatically populated with available product details such as a title,
      * a subtitle, a product description, item specifics, and links to stock images for the product.
      *
-     * @var Product
+     * @var Product|null
      */
-    public Product $product;
+    #[Assert\Type(Product::class)]
+    public ?Product $product = null;
 
     /** The seller-defined Stock-Keeping Unit (SKU) of the inventory item. The seller should have a unique SKU value for every product that they sell. */
-    public string $sku;
+    #[Assert\Type('string')]
+    public ?string $sku = null;
 }

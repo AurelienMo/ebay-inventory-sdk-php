@@ -435,25 +435,16 @@ class OfferApi implements ApiInterface
         string $offset = null
     ): Request {
         $resourcePath = '/offer';
-        $queryParams['sku'] = Serializer::toQueryValue($sku);
 
-        if ($format !== null) {
-            $queryParams['format'] = Serializer::toQueryValue($format->value);
-        }
+        $queryParameters = [
+            'sku' => $sku,
+            'format' => $format,
+            'marketplace_id' => $marketplaceId,
+            'limit' => $limit,
+            'offset' => $offset,
+        ];
 
-        if ($limit !== null) {
-            $queryParams['limit'] = Serializer::toQueryValue($limit);
-        }
-
-        if ($marketplaceId !== null) {
-            $queryParams['marketplace_id'] = Serializer::toQueryValue($marketplaceId->value);
-        }
-
-        if ($offset !== null) {
-            $queryParams['offset'] = Serializer::toQueryValue($offset);
-        }
-
-        return $this->ebayRequest->getRequest($resourcePath, $queryParams);
+        return $this->ebayRequest->getRequest($resourcePath, $queryParameters);
     }
 
     /**

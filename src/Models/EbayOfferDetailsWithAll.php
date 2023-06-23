@@ -7,6 +7,7 @@ use SapientPro\EbayInventorySDK\Enums\ListingDurationEnum;
 use SapientPro\EbayInventorySDK\Enums\MarketplaceEnum;
 use SapientPro\EbayInventorySDK\Enums\OfferStatusEnum;
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type provides details of an offer,
@@ -17,10 +18,12 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
     use FillsModel;
 
     /** This integer value indicates the quantity of the inventory item (specified by the <strong>sku</strong> value) that will be available for purchase by buyers shopping on the eBay site specified in the <strong>marketplaceId</strong> field. For unpublished offers where the available quantity has yet to be set, the <strong>availableQuantity</strong> value is set to <code>0</code>. */
+    #[Assert\Type('int')]
     public int $availableQuantity;
 
     /** The unique identifier of the primary eBay category that the inventory item is listed under. This field is always returned for published offers, but is only returned if set for unpublished offers. */
-    public ?string $categoryId;
+    #[Assert\Type('string')]
+    public ?string $categoryId = null;
 
     /**
      * This container is returned if a charitable organization will receive
@@ -30,7 +33,8 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * that will be donated to the charitable organization.
      * @var Charity|null
      */
-    public ?Charity $charity;
+    #[Assert\Type(Charity::class)]
+    public ?Charity $charity = null;
 
     /**
      * This container provides IDs for the producer
@@ -41,7 +45,8 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * method of the <strong>Sell Metatdata API</strong> to retrieve valid categories for a site.
      * @var ExtendedProducerResponsibility|null
      */
-    public ?ExtendedProducerResponsibility $extendedProducerResponsibility;
+    #[Assert\Type(ExtendedProducerResponsibility::class)]
+    public ?ExtendedProducerResponsibility $extendedProducerResponsibility = null;
 
     /**
      * This enumerated value indicates the listing format of the offer.
@@ -49,6 +54,7 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      *
      * @var FormatTypeEnum
      */
+    #[Assert\Type(FormatTypeEnum::class)]
     public FormatTypeEnum $format;
 
     /**
@@ -60,9 +66,11 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * so will get returned as <code>false</code>
      * if seller does not set this feature with a 'Create' or 'Update' offer method.
      */
+    #[Assert\Type('bool')]
     public bool $hideBuyerDetails = false;
 
     /** This field indicates whether or not eBay product catalog details are applied to a listing. A value of <code>true</code> indicates the listing corresponds to the eBay product associated with the provided product identifier. The product identifier is provided in <strong>createOrReplaceInventoryItem</strong>.<p><span class="tablenote"><strong>Note:</strong> Though the <strong>includeCatalogProductDetails</strong> parameter is not required to be submitted in the request, the parameter defaults to 'true' if omitted.</span></p> */
+    #[Assert\Type('bool')]
     public bool $includeCatalogProductDetails = true;
 
     /**
@@ -73,10 +81,12 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * The <strong>listing</strong> container is not returned at all for unpublished offers.
      * @var ListingDetails|null
      */
+    #[Assert\Type(ListingDetails::class)]
     public ?ListingDetails $listing;
 
     /** The description of the eBay listing that is part of the unpublished or published offer. This field is always returned for published offers, but is only returned if set for unpublished offers.<br><br><strong>Max Length</strong>: 500000 (which includes HTML markup/tags) */
-    public ?string $listingDescription;
+    #[Assert\Type('string')]
+    public ?string $listingDescription = null;
 
     /**
      * This field indicates the number of days that the listing will be active.
@@ -92,6 +102,7 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      *
      * @var ListingDurationEnum
      */
+    #[Assert\Type(ListingDurationEnum::class)]
     public ListingDurationEnum $listingDuration;
 
     /**
@@ -112,13 +123,16 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      *
      * @var ListingPolicies
      */
+    #[Assert\Type(ListingPolicies::class)]
     public ListingPolicies $listingPolicies;
 
     /** This timestamp is the date/time that the seller set for the scheduled listing. With the scheduled listing feature, the seller can set a time in the future that the listing will become active, instead of the listing becoming active immediately after a <strong>publishOffer</strong> call. <br><br> Scheduled listings do not always start at the exact date/time specified by the seller, but the date/time of the timestamp returned in <strong>getOffer</strong>/<strong>getOffers</strong> will be the same as the timestamp passed into a 'Create' or 'Update' offer call. <br><br> This field is returned if set for an offer. */
-    public ?string $listingStartDate;
+    #[Assert\Type('string')]
+    public ?string $listingStartDate = null;
 
     /** This field is only applicable and returned if the listing is a lot listing. A lot listing is a listing that has multiple quantity of the same product. An example would be a set of four identical car tires. The integer value in this field is the number of identical items being sold through the lot listing. */
-    public ?int $lotSize;
+    #[Assert\Type('int')]
+    public ?int $lotSize = null;
 
     /**
      * This enumeration value is the unique identifier of the eBay site on which the offer is available,
@@ -127,12 +141,15 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      *
      * @var MarketplaceEnum
      */
+    #[Assert\Type(MarketplaceEnum::class)]
     public MarketplaceEnum $marketplaceId;
 
     /** The unique identifier of the inventory location. This identifier is set up by the merchant when the inventory location is first created with the <strong>createInventoryLocation</strong> call. Once this value is set for an inventory location, it can not be modified. To get more information about this inventory location, the <strong>getInventoryLocation</strong> call can be used, passing in this value at the end of the call URI.<br><br>This field is always returned for published offers, but is only returned if set for unpublished offers.<br><br><b>Max length</b>: 36 */
+    #[Assert\Type('string')]
     public string $merchantLocationKey;
 
     /** The unique identifier of the offer. This identifier is used in many offer-related calls, and it is also used in the <strong>bulkUpdatePriceQuantity</strong> call. */
+    #[Assert\Type('string')]
     public string $offerId;
 
     /**
@@ -145,10 +162,12 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * this container will be returned as empty.
      * @var PricingSummary
      */
+    #[Assert\Type(PricingSummary::class)]
     public PricingSummary $pricingSummary;
 
     /** This field is only applicable and set if the seller wishes to set a restriction on the purchase quantity of an inventory item per seller. If this field is set by the seller for the offer, then each distinct buyer may purchase up to, but not exceed the quantity in this field. So, if this field's value is <code>5</code>, each buyer may purchase a quantity of the inventory item between one and five, and the purchases can occur in one multiple-quantity purchase, or over multiple transactions. If a buyer attempts to purchase one or more of these products, and the cumulative quantity will take the buyer beyond the quantity limit, that buyer will be blocked from that purchase.<br> */
-    public ?int $quantityLimitPerBuyer;
+    #[Assert\Type('int')]
+    public ?int $quantityLimitPerBuyer = null;
 
     /**
      * <span class="tablenote">This container, as well as its child containers and fields,
@@ -157,12 +176,15 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * and the repair score for the listing.
      * @var Regulatory|null
      */
-    public ?Regulatory $regulatory;
+    #[Assert\Type(Regulatory::class)]
+    public ?Regulatory $regulatory = null;
 
     /** The unique identifier for a secondary category. This field is applicable if the seller decides to list the item under two categories. Sellers can use the <a href="/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions" target="_blank">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. A fee may be charged when adding a secondary category to a listing. <br><br><span class="tablenote"><strong>Note:</strong> You cannot list <strong>US eBay Motors</strong> vehicles in two categories. However, you can list <strong>Parts & Accessories</strong> in two categories.</span> */
-    public ?string $secondaryCategoryId;
+    #[Assert\Type('string')]
+    public ?string $secondaryCategoryId = null;
 
     /** This is the seller-defined SKU value of the product in the offer.<br><br><strong>Max Length</strong>: 50 <br> */
+    #[Assert\Type('string')]
     public string $sku;
 
     /**
@@ -172,6 +194,7 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      *
      * @var OfferStatusEnum
      */
+    #[Assert\Type(OfferStatusEnum::class)]
     public OfferStatusEnum $status;
 
     /**
@@ -183,7 +206,8 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * </pre></code>
      * @var string[]|null
      */
-    public ?array $storeCategoryNames;
+    #[Assert\Type('array')]
+    public ?array $storeCategoryNames = null;
 
     /**
      * This container is only returned if a sales tax table,
@@ -197,5 +221,6 @@ class EbayOfferDetailsWithAll implements EbayModelInterface
      * on setting up and using a sales tax table.
      * @var Tax|null
      */
+    #[Assert\Type(Tax::class)]
     public ?Tax $tax;
 }

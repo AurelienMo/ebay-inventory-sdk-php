@@ -4,6 +4,7 @@ namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\ConditionEnum;
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used to provide detailed information about an inventory item.
@@ -21,9 +22,10 @@ class InventoryItem implements EbayModelInterface
      * <br><br> Since an inventory item must have specified quantity before being published in an offer,
      * this container is always returned in the 'Get' calls for SKUs that are part of a published offer.
      * If a SKU is not part of a published offer, this container will only be returned if set for the inventory item.
-     * @var Availability
+     * @var Availability|null
      */
-    public Availability $availability;
+    #[Assert\Type(Availability::class)]
+    public ?Availability $availability = null;
 
     /**
      * This enumeration value indicates the condition of the item.
@@ -80,12 +82,14 @@ class InventoryItem implements EbayModelInterface
      * </span> For implementation help, refer to
      * https://developer.ebay.com/api-docs/sell/inventory/types/slr:ConditionEnum
      *
-     * @var ConditionEnum
+     * @var ConditionEnum|null
      */
-    public ConditionEnum $condition;
+    #[Assert\Type(ConditionEnum::class)]
+    public ?ConditionEnum $condition = null;
 
     /** This string field is used by the seller to more clearly describe the condition of a used inventory item, or an inventory item whose <strong>condition</strong> value is not <code>NEW</code>, <code>LIKE_NEW</code>, <code>NEW_OTHER</code>, or <code>NEW_WITH_DEFECTS</code>.<br><br> The <strong>conditionDescription</strong> field is available for all eBay categories. If the <strong>conditionDescription</strong> field is used with an item in one of the new conditions (mentioned in previous paragraph), eBay will simply ignore this field if included, and eBay will return a warning message to the user. <br><br> This field should only be used to further clarify the condition of the used item. It should not be used for branding, promotions, shipping, returns, payment or other information unrelated to the condition of the used item. Make sure that the <strong>condition</strong> value, condition description, listing description, and the item's pictures do not contradict one another. <br><br> This field is not always required, but is required if an inventory item is being updated and a condition description already exists for that inventory item. <br><br> This field is returned in the <strong>getInventoryItem</strong> and <strong>getInventoryItems</strong> calls if a condition description was provided for a used inventory item.<br><br><strong>Max Length</strong>: 1000. */
-    public string $conditionDescription;
+    #[Assert\Type("string")]
+    public ?string $conditionDescription = null;
 
     /**
      * This container is used if the seller is offering one or more calculated shipping options for the inventory item,
@@ -99,9 +103,10 @@ class InventoryItem implements EbayModelInterface
      * and/or package dimensions are specified for an inventory item.
      * <br><br>See the https://pages.ebay.com/help/pay/calculated-shipping.html
      * help page for more information on calculated shipping.
-     * @var PackageWeightAndSize
+     * @var PackageWeightAndSize|null
      */
-    public PackageWeightAndSize $packageWeightAndSize;
+    #[Assert\Type(PackageWeightAndSize::class)]
+    public ?PackageWeightAndSize $packageWeightAndSize = null;
 
     /**
      * This container is used to define the product details, such as product title,
@@ -145,7 +150,8 @@ class InventoryItem implements EbayModelInterface
      * and <strong>getInventoryItems</strong> calls since product data must be defined
      * for published offers, but for unpublished inventory items, this container will
      * only be returned if product details have been defined for the inventory item.
-     * @var Product
+     * @var Product|null
      */
-    public Product $product;
+    #[Assert\Type(Product::class)]
+    public ?Product $product = null;
 }

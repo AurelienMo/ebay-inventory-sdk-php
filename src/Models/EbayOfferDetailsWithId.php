@@ -4,6 +4,7 @@ namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Enums\ListingDurationEnum;
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type provides details of an offer,
@@ -19,10 +20,12 @@ class EbayOfferDetailsWithId implements EbayModelInterface
     use FillsModel;
 
     /** This integer value sets the quantity of the inventory item that will be available through the offer. Quantity must be set to <code>1</code> or more in order for the inventory item to be purchasable. This value should not be more than the quantity that is specified for the inventory item record. For auction listings, this value must be <code>1</code>. <br><br>If this field exists for the current unpublished or published offer, it should be provided again in the <strong>updateOffer</strong> call, even if the value is not changing. If this particular field is omitted in an <strong>updateOffer</strong> call, the general available quantity set for the inventory item record may be used instead, and this may not be accurate if the inventory item is being sold across multiple marketplaces. */
-    public int $availableQuantity;
+    #[Assert\Type('int')]
+    public ?int $availableQuantity = null;
 
     /** The unique identifier of the eBay category that the inventory item is/will be listed under. This field is not immediately required for an unpublished offer, but will be required before publishing the offer. Sellers can use the <a href="/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions " target="_blank">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. The seller passes in a query string like "<em>iPhone 6</em>", and category ID values for suggested categories are returned in the response.<br><br>If this field exists for the current unpublished offer, it should be provided again in the <strong>updateOffer</strong> call, even if the eBay category is not changing. For a published offer (aka active eBay listing), this field must be provided or an error may occur. The eBay category of an active eBay listing cannot be changed once the listing has one or more sales, or if the listing is scheduled to end in less than 12 hours. */
-    public string $categoryId;
+    #[Assert\Type('string')]
+    public ?string $categoryId = null;
 
     /**
      * This container is used if the seller wishes to update a published or unpublished offer
@@ -33,9 +36,10 @@ class EbayOfferDetailsWithId implements EbayModelInterface
      * that indicates the percentage of the sales proceeds
      * that will be donated to the charitable organization for each sale.
      * Both fields in this container are conditionally required for charitable listings.
-     * @var Charity
+     * @var Charity|null
      */
-    public Charity $charity;
+    #[Assert\Type(Charity::class)]
+    public ?Charity $charity = null;
 
     /**
      * This container provides IDs for the producer
@@ -44,18 +48,22 @@ class EbayOfferDetailsWithId implements EbayModelInterface
      * This container is supported by a limited number of sites and specific categories.
      * Use the "/api-docs/sell/metadata/resources/marketplace/methods/getExtendedProducerResponsibilityPolicies"
      * method of the <strong>Sell Metatdata API</strong> to retrieve valid categories for a site.
-     * @var ExtendedProducerResponsibility
+     * @var ExtendedProducerResponsibility|null
      */
-    public ExtendedProducerResponsibility $extendedProducerResponsibility;
+    #[Assert\Type(ExtendedProducerResponsibility::class)]
+    public ?ExtendedProducerResponsibility $extendedProducerResponsibility = null;
 
     /** This field is included and set to <code>true</code> if the seller wishes to update a published or unpublished offer with the private listing feature. Alternatively, the seller could also remove the private listing feature (if already set for a published or unpublished offer) by including this field and setting it to <code>false</code>. <br><br> Sellers may want to use this option when they believe that a listing's potential bidders/buyers would not want their obfuscated user IDs (and feedback scores) exposed to other users. */
-    public bool $hideBuyerDetails;
+    #[Assert\Type('bool')]
+    public ?bool $hideBuyerDetails = null;
 
     /** This field indicates whether or not eBay product catalog details are applied to a listing. A value of <code>true</code> indicates the listing corresponds to the eBay product associated with the provided product identifier. The product identifier is provided in <strong>createOrReplaceInventoryItem</strong>.<p><span class="tablenote"><strong>Note:</strong> Though the <strong>includeCatalogProductDetails</strong> parameter is not required to be submitted in the request, the parameter defaults to 'true' if omitted.</span></p> */
-    public bool $includeCatalogProductDetails;
+    #[Assert\Type('bool')]
+    public ?bool $includeCatalogProductDetails = null;
 
     /** The text in this field is (published offers), or will become (unpublished offers) the description of the eBay listing. This field is not immediately required for an unpublished offer, but will be required before publishing the offer. Note that if the <strong>listingDescription</strong> field was omitted in the <strong>createOffer</strong> call for the offer, the offer entity should have picked up the text provided in the <strong>product.description</strong> field of the inventory item record, or if the inventory item is part of a group, the offer entity should have picked up the text provided in the <strong>description</strong> field of the inventory item group record.<br><br>HTML tags and markup can be used in listing descriptions, but each character counts toward the max length limit.<br><br><span class="tablenote"> <strong>Note:</strong> To ensure that their short listing description is optimized when viewed on mobile devices, sellers should strongly consider using eBay's <a href="https://pages.ebay.com/sell/itemdescription/customizeyoursummary.html " target="_blank">View Item description summary feature</a> when listing their items. Keep in mind that the 'short' listing description is what prospective buyers first see when they view the listing on a mobile device. The 'full' listing description is also available to mobile users when they click on the short listing description, but the full description is not automatically optimized for viewing in mobile devices, and many users won't even drill down to the full description.<br><br> Using HTML div and span tag attributes, this feature allows sellers to customize and fully control the short listing description that is displayed to prospective buyers when viewing the listing on a mobile device. The short listing description on mobile devices is limited to 800 characters, and whenever the full listing description (provided in this field, in UI, or seller tool) exceeds this limit, eBay uses a special algorithm to derive the best possible short listing description within the 800-character limit. However, due to some short listing description content being removed, it is definitely not ideal for the seller, and could lead to a bad buyer experience and possibly to a Significantly not as described (SNAD) case, since the buyer may not get complete details on the item when viewing the short listing description. See the eBay help page for more details on using the HTML div and span tags.</span><br><br>If this field exists for the current unpublished offer, it should be provided again in the <strong>updateOffer</strong> call, even if the text is not changing. For a published offer (aka active eBay listing), this field must be provided or an error may occur.<br><br><strong>Max length</strong>: 500000 (which includes HTML markup/tags) */
-    public string $listingDescription;
+    #[Assert\Type('string')]
+    public ?string $listingDescription = null;
 
     /**
      * This field indicates the number of days that the listing will be active.
@@ -69,9 +77,10 @@ class EbayOfferDetailsWithId implements EbayModelInterface
      * For implementation help, refer to
      * https://developer.ebay.com/api-docs/sell/inventory/types/slr:ListingDurationEnum
      *
-     * @var ListingDurationEnum
+     * @var ListingDurationEnum|null
      */
-    public ListingDurationEnum $listingDuration;
+    #[Assert\Type(ListingDurationEnum::class)]
+    public ?ListingDurationEnum $listingDuration = null;
 
     /**
      * This container sets listing policies that will be used to construct the listing.
@@ -92,18 +101,22 @@ class EbayOfferDetailsWithId implements EbayModelInterface
      * My eBay or by using the Account API's <strong>optInToProgram</strong> call.
      * Similarly, payment, return, and fulfillment business policies may be created/managed in
      * My eBay or by using the business policy calls of the <strong>Account API</strong>.
-     * @var ListingPolicies
+     * @var ListingPolicies|null
      */
-    public ListingPolicies $listingPolicies;
+    #[Assert\Type(ListingPolicies::class)]
+    public ?ListingPolicies $listingPolicies = null;
 
     /** This field can be used with an unpublished offer if the seller wants to specify a time in the future that the listing will become active on eBay. The timestamp supplied in this field should be in UTC format, and it should be far enough in the future so that the seller will have enough time to publish the listing with the <strong>publishOffer</strong> method.<br><br> This field is optional, and it doesn't apply to offers where the corresponding listing is already active. If this field is not provided, the listing starts immediately after a successful <strong>publishOffer</strong> method. */
-    public string $listingStartDate;
+    #[Assert\Type('string')]
+    public ?string $listingStartDate = null;
 
     /** This field is only applicable if the listing is a lot listing. A lot listing is a listing that has multiple quantity of the same item, such as four identical tires being sold as a single offer, or it can be a mixed lot of similar items, such as used clothing items or an assortment of baseball cards. Whether the lot listing involved identical items or a mixed lot, the integer value passed into this field is the total number of items in the lot. Lots can be used for auction and fixed-price listings. */
-    public int $lotSize;
+    #[Assert\Type('int')]
+    public ?int $lotSize = null;
 
     /** The unique identifier of a merchant's inventory location (where the inventory item in the offer is located). A <strong>merchantLocationKey</strong> value is established when the merchant creates an inventory location using the <strong>createInventoryLocation</strong> call. To get more information about inventory locations, the <strong>getInventoryLocation</strong> call can be used.<br><br>This field is not initially required upon first creating an offer, but will become required before an offer can be published.<br><br><b>Max length</b>: 36 */
-    public string $merchantLocationKey;
+    #[Assert\Type('string')]
+    public ?string $merchantLocationKey = null;
 
     /**
      * This container shows the listing price for the product offer, and if applicable,
@@ -117,24 +130,28 @@ class EbayOfferDetailsWithId implements EbayModelInterface
      * but an offer price will be required before an offer can be published,
      * and if a <strong>pricingSummary</strong> container already exists for an unpublished offer,
      * it must be provided again, even if the values are not changing.
-     * @var PricingSummary
+     * @var PricingSummary|null
      */
-    public PricingSummary $pricingSummary;
+    #[Assert\Type(PricingSummary::class)]
+    public ?PricingSummary $pricingSummary = null;
 
     /** This field is only applicable and set if the seller wishes to set a restriction on the purchase quantity per seller. If this field is set by the seller for the offer, then each distinct buyer may purchase up to, but not exceeding the quantity specified for this field. So, if this field's value is <code>5</code>, each buyer may purchase between one to five of these products, and the purchases can occur in one multiple-quantity purchase, or over multiple transactions. If a buyer attempts to purchase one or more of these products, and the cumulative quantity will take the buyer beyond the quantity limit, that buyer will be blocked from that purchase.<br><br>If this field currently exists for an unpublished or published offer, it should be provided again in an <strong>updateOffer</strong> call, even if the value is not changing.<br> */
-    public int $quantityLimitPerBuyer;
+    #[Assert\Type('int')]
+    public ?int $quantityLimitPerBuyer = null;
 
     /**
      * <span class="tablenote">This container, as well as its child containers and fields,
      * will not be available until March 1, 2023.
      * </span><br><br>This container is used by the seller to provide hazardous material related information
      * and the repair score for the listing.
-     * @var Regulatory
+     * @var Regulatory|null
      */
-    public Regulatory $regulatory;
+    #[Assert\Type(Regulatory::class)]
+    public ?Regulatory $regulatory = null;
 
     /** The unique identifier for a secondary category. This field is applicable if the seller decides to list the item under two categories. Sellers can use the <a href="/api-docs/commerce/taxonomy/resources/category_tree/methods/getCategorySuggestions" target="_blank">getCategorySuggestions</a> method of the Taxonomy API to retrieve suggested category ID values. A fee may be charged when adding a secondary category to a listing. <br><br><span class="tablenote"><strong>Note:</strong> You cannot list <strong>US eBay Motors</strong> vehicles in two categories. However, you can list <strong>Parts & Accessories</strong> in two categories.</span> */
-    public string $secondaryCategoryId;
+    #[Assert\Type('string')]
+    public ?string $secondaryCategoryId = null;
 
     /**
      * This container is used if the seller would like to place the inventory item into
@@ -148,7 +165,8 @@ class EbayOfferDetailsWithId implements EbayModelInterface
      * even if the eBay categories are not changing.
      * @var string[]
      */
-    public array $storeCategoryNames;
+    #[Assert\Type('array')]
+    public ?array $storeCategoryNames = null;
 
     /**
      * This container is only applicable and used if a sales tax table,
@@ -165,7 +183,8 @@ class EbayOfferDetailsWithId implements EbayModelInterface
      * even if none of the tax settings are changing.
      * <br><br>See the https://pages.ebay.com/help/pay/checkout-tax-table.html
      * help page for more information on setting up and using a sales tax table.
-     * @var Tax
+     * @var Tax|null
      */
-    public Tax $tax;
+    #[Assert\Type(Tax::class)]
+    public ?Tax $tax = null;
 }

@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used by the base request of the <strong>bulkCreateOffer</strong> method,
@@ -17,5 +18,6 @@ class BulkEbayOfferDetailsWithKeys implements EbayModelInterface
      * Up to 25 offers can be created with one <strong>bulkCreateOffer</strong> call.
      * @var EbayOfferDetailsWithKeys[]
      */
+    #[Assert\Type('array')]
     public ?array $requests;
 }

@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * A complex type that is used to provide the physical address of a location, and it geo-coordinates.
@@ -18,6 +19,7 @@ class Location implements EbayModelInterface
      *
      * @var Address
      */
+    #[Assert\Type(Address::class)]
     public Address $address;
 
     /**
@@ -26,8 +28,10 @@ class Location implements EbayModelInterface
      *
      * @var GeoCoordinates|null
      */
+    #[Assert\Type(GeoCoordinates::class)]
     public ?GeoCoordinates $geoCoordinates;
 
     /** A unique eBay-assigned ID for the location. <br><br> <span class="tablenote"> <strong>Note:</strong> This field should not be confused with the seller-defined <b>merchantLocationKey</b> value. It is the <b>merchantLocationKey</b> value which is used to identify an inventory location when working with inventory location API calls. The <strong>locationId</strong> value is only used internally by eBay.</span> */
-    public ?string $locationId;
+    #[Assert\Type('string')]
+    public ?string $locationId = null;
 }

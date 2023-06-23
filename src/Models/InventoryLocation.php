@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used by the <strong>updateInventoryLocation</strong> call to update operating hours,
@@ -13,16 +14,20 @@ class InventoryLocation implements EbayModelInterface
     use FillsModel;
 
     /** This text field is used by the merchant to provide/update additional information about an inventory location. Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br><br><b>Max length</b>: 256 */
-    public ?string $locationAdditionalInformation;
+    #[Assert\Type('string')]
+    public ?string $locationAdditionalInformation = null;
 
     /** This text field is generally used by the merchant to provide/update special pickup instructions for a store inventory location. Although this field is optional, it is recommended that merchants provide this field to create a pleasant and easy pickup experience for In-Store Pickup and Click and Collect orders. If this field is not included in the call request payload, eBay will use the default pickup instructions contained in the merchant's profile (if available). Whatever text is passed in this field will replace the current text string defined for this field. If the text will not change, the same text should be passed in once again. <br><br><b>Max length</b>: 1000 */
-    public ?string $locationInstructions;
+    #[Assert\Type('string')]
+    public ?string $locationInstructions = null;
 
     /** This text field is used by the merchant to provide/update the Website address (URL) associated with the inventory location. The URL that is passed in this field will replace any other URL that may be defined for this field. <br><br><b>Max length</b>: 512 */
-    public ?string $locationWebUrl;
+    #[Assert\Type('string')]
+    public ?string $locationWebUrl = null;
 
     /** This text field is used by the merchant to update the name of the inventory location. This name should be a human-friendly name as it will be in In-Store Pickup and Click and Collect listings. A name is not required for warehouse inventory locations. For store inventory locations, this field is not immediately required, but will be required before an offer enabled with the In-Store Pickup or Click and Collect capability can be published. So, if the seller omitted this field in the <strong>createInventoryLocation</strong> call, it is required for an <strong>updateInventoryLocation</strong> call. The name that is passed in this field will replace any other name that may be defined for this field. */
-    public ?string $name;
+    #[Assert\Type('string')]
+    public ?string $name = null;
 
     /**
      * This container is used to provide/update the regular operating hours for a store location during the
@@ -33,10 +38,12 @@ class InventoryLocation implements EbayModelInterface
      *
      * @var OperatingHours[]|null
      */
-    public ?array $operatingHours;
+    #[Assert\Type('array')]
+    public ?array $operatingHours = null;
 
     /** This text field is used by the merchant to provide/update the phone number for the inventory location. The phone number that is passed in this field will replace any other phone number that may be defined for this field. <br><br><b>Max length</b>: 36 */
-    public ?string $phone;
+    #[Assert\Type('string')]
+    public ?string $phone = null;
 
     /**
      * This container is used to provide/update the special operating hours for a store location on a specific
@@ -49,5 +56,6 @@ class InventoryLocation implements EbayModelInterface
      *
      * @var SpecialHours[]
      */
+    #[Assert\Type('array')]
     public ?array $specialHours;
 }

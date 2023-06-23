@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used to specify/indicate the motor vehicles that are compatible with the corresponding inventory item.
@@ -53,10 +54,12 @@ class CompatibleProduct implements EbayModelInterface
      * and <strong>compatibilityProperties</strong> containers may not be used together or the call will fail.</span>
      * @var NameValueList[]|null
      */
-    public ?array $compatibilityProperties;
+    #[Assert\Type('array')]
+    public ?array $compatibilityProperties = null;
 
     /** This field is optionally used by the seller to input any notes pertaining to the compatible vehicle list being defined. The seller might use this field to specify the placement of the part on a vehicle or other applicable information. This field will only be returned if specified by the seller.<br><br><strong>Max Length</strong>: 500<br> */
-    public ?string $notes;
+    #[Assert\Type('string')]
+    public ?string $notes = null;
 
     /**
      * This container consists of an array of motor vehicles that are compatible with the motor vehicle part
@@ -77,6 +80,7 @@ class CompatibleProduct implements EbayModelInterface
      * and <strong>compatibilityProperties</strong> containers may not be used together or the call will fail.</span>
      * @var ProductFamilyProperties|null
      */
+    #[Assert\Type(ProductFamilyProperties::class)]
     public ?ProductFamilyProperties $productFamilyProperties;
 
     /**
@@ -90,5 +94,6 @@ class CompatibleProduct implements EbayModelInterface
      * <br><br>Note that this container will not be returned in the <strong>getProductCompatibility</strong> call.
      * @var ProductIdentifier|null
      */
-    public ?ProductIdentifier $productIdentifier;
+    #[Assert\Type(ProductIdentifier::class)]
+    public ?ProductIdentifier $productIdentifier = null;
 }

@@ -3,13 +3,16 @@
 namespace SapientPro\EbayInventorySDK\Models\Concerns;
 
 use SapientPro\EbayInventorySDK\Client\Serializer;
+use SapientPro\EbayInventorySDK\Client\Validator;
 use SapientPro\EbayInventorySDK\Models\EbayModelInterface;
-use SapientPro\EbayInventorySDK\Models\NonExistentPropertyException;
+use SapientPro\EbayInventorySDK\Models\Exceptions\NonExistentPropertyException;
 
 trait FillsModel
 {
     public static function fromArray(array $data): EbayModelInterface
     {
+        Validator::validateArray($data, self::class);
+
         $model = new self();
 
         foreach ($data as $key => $value) {

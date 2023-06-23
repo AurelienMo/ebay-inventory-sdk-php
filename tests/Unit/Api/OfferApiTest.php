@@ -108,15 +108,15 @@ class OfferApiTest extends TestCase
                     'categoryId' => '30120',
                     'pricingSummary' => PricingSummary::fromArray([
                         'price' => Amount::fromArray([
-                            'value' => 100,
+                            'value' => '100',
                             'currency' => CurrencyCodeEnum::USD->value
                         ]),
                         'originalRetailPrice' => Amount::fromArray([
-                            'value' => 120,
+                            'value' => '120',
                             'currency' => CurrencyCodeEnum::USD->value
                         ]),
                         'minimumAdvertisedPrice' => Amount::fromArray([
-                            'value' => 95,
+                            'value' => '95',
                             'currency' => CurrencyCodeEnum::USD->value
                         ]),
                         'pricingVisibility' => MinimumAdvertisedPriceHandlingEnum::PRE_CHECKOUT,
@@ -129,11 +129,11 @@ class OfferApiTest extends TestCase
                         'shippingCostOverrides' => [
                             ShippingCostOverride::fromArray([
                                 'shippingCost' => Amount::fromArray([
-                                    'value' => 0,
+                                    'value' => '0',
                                     'currency' => CurrencyCodeEnum::USD->value
                                 ]),
                                 'additionalShippingCost' => Amount::fromArray([
-                                    'value' => 0,
+                                    'value' => '0',
                                     'currency' => CurrencyCodeEnum::USD->value
                                 ]),
                                 'priority' => 1,

@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used to specify the quantity of the inventory item
@@ -23,12 +24,14 @@ class Availability implements EbayModelInterface
      * In-Store Pickup is only available to large merchants selling on the US, UK, Germany, and Australia sites.
      * @var PickupAtLocationAvailability[]
      */
-    public array $pickupAtLocationAvailability;
+    #[Assert\Type('array')]
+    public ?array $pickupAtLocationAvailability = null;
 
     /**
      * This container specifies the quantity of the inventory item
      * that are available for purchase across one or more eBay marketplaces.
-     * @var ShipToLocationAvailability
+     * @var ShipToLocationAvailability|null
      */
-    public ShipToLocationAvailability $shipToLocationAvailability;
+    #[Assert\Type(ShipToLocationAvailability::class)]
+    public ?ShipToLocationAvailability $shipToLocationAvailability = null;
 }

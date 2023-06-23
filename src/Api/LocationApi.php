@@ -353,18 +353,13 @@ class LocationApi implements ApiInterface
     protected function getInventoryLocationsRequest(int $limit = null, int $offset = null): Request
     {
         $resourcePath = '/location';
-        $queryParams = null;
 
-        // query params
-        if ($limit !== null) {
-            $queryParams['limit'] = Serializer::toQueryValue($limit);
-        }
-        // query params
-        if ($offset !== null) {
-            $queryParams['offset'] = Serializer::toQueryValue($offset);
-        }
+        $queryParameters = [
+            'limit' => $limit,
+            'offset' => $offset,
+        ];
 
-        return $this->ebayRequest->getRequest($resourcePath, $queryParams);
+        return $this->ebayRequest->getRequest($resourcePath, $queryParameters);
     }
 
     /**

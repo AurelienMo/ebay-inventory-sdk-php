@@ -3,6 +3,7 @@
 namespace SapientPro\EbayInventorySDK\Models;
 
 use SapientPro\EbayInventorySDK\Models\Concerns\FillsModel;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * This type is used by the response payload of the <strong>bulkMigrateListings</strong> call.
@@ -16,5 +17,6 @@ class BulkMigrateListingResponse implements EbayModelInterface
      * The results of each attempted listing migration is captured under this container.
      * @var MigrateListingResponse[]
      */
+    #[Assert\Type('array')]
     public array $responses;
 }
