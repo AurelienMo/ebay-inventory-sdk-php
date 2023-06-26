@@ -120,8 +120,8 @@ class InventoryItemGroupApi implements ApiInterface
         );
 
         return $this->ebayRequest->putRequest(
-            $body,
             $resourcePath,
+            $body,
             headerParameters: ['Content-Language' => $contentLanguage]
         );
     }
