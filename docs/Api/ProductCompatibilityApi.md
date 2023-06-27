@@ -1,35 +1,32 @@
-# EBay\Inventory\ProductCompatibilityApi
+# SapientPro\EbayInventorySDK\Api\ProductCompatibilityApi
 
 All URIs are relative to *https://api.ebay.com/sell/inventory/v1*
 
-Method | HTTP request | Description
-------------- | ------------- | -------------
-[**createOrReplaceProductCompatibility**](ProductCompatibilityApi.md#createorreplaceproductcompatibility) | **PUT** /inventory_item/{sku}/product_compatibility | 
-[**deleteProductCompatibility**](ProductCompatibilityApi.md#deleteproductcompatibility) | **DELETE** /inventory_item/{sku}/product_compatibility | 
-[**getProductCompatibility**](ProductCompatibilityApi.md#getproductcompatibility) | **GET** /inventory_item/{sku}/product_compatibility | 
+| Method                                                                                                    | HTTP request                                           | Description |
+|-----------------------------------------------------------------------------------------------------------|--------------------------------------------------------|-------------|
+| [**createOrReplaceProductCompatibility**](ProductCompatibilityApi.md#createorreplaceproductcompatibility) | **PUT** /inventory_item/{sku}/product_compatibility    |             |
+| [**deleteProductCompatibility**](ProductCompatibilityApi.md#deleteproductcompatibility)                   | **DELETE** /inventory_item/{sku}/product_compatibility |             |
+| [**getProductCompatibility**](ProductCompatibilityApi.md#getproductcompatibility)                         | **GET** /inventory_item/{sku}/product_compatibility    |             |
 
 # **createOrReplaceProductCompatibility**
-> \EBay\Inventory\Model\BaseResponse createOrReplaceProductCompatibility($body, $contentLanguage, $sku)
-
-
+> SapientPro\EbayInventorySDK\Models\BaseResponse createOrReplaceProductCompatibility($body, $contentLanguage, $sku)
 
 This call is used by the seller to create or replace a list of products that are compatible with the inventory item. The inventory item is identified with a SKU value in the URI. Product compatibility is currently only applicable to motor vehicle parts and accessory categories, but more categories may be supported in the future.<br /><br /><p>In addition to the <code>authorization</code> header, which is required for all eBay REST API calls, the <strong>createOrReplaceProductCompatibility</strong> call also requires the <code>Content-Language</code> header, that sets the natural language that will be used in the field values of the request payload. For US English, the code value passed in this header should be <code>en-US</code>. To view other supported <code>Content-Language</code> values, and to read more about all supported HTTP headers for eBay REST API calls, see the <a href=\"/api-docs/static/rest-request-components.html#HTTP\">HTTP request headers</a> topic in the <strong>Using eBay RESTful APIs</strong> document.</p>
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\ProductCompatibilityApi;
+use SapientPro\EbayInventorySDK\Models\Compatibility;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\ProductCompatibilityApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new ProductCompatibilityApi(
+    сonfig: $config
 );
-$body = new \EBay\Inventory\Model\Compatibility(); // \EBay\Inventory\Model\Compatibility | Details of the compatibility
+$body = Compatibility::fromArray([]); // SapientPro\EbayInventorySDK\Models\Compatibility | Details of the compatibility
 $contentLanguage = "contentLanguage_example"; // string | This request header sets the natural language that will be provided in the field values of the request payload.
 $sku = "sku_example"; // string | A SKU (stock keeping unit) is an unique identifier defined by a seller for a product
 
@@ -44,15 +41,15 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**\EBay\Inventory\Model\Compatibility**](../Model/Compatibility.md)| Details of the compatibility |
- **contentLanguage** | **string**| This request header sets the natural language that will be provided in the field values of the request payload. |
- **sku** | **string**| A SKU (stock keeping unit) is an unique identifier defined by a seller for a product |
+| Name                | Type                                                                              | Description                                                                                                     | Notes |
+|---------------------|-----------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|-------|
+| **body**            | [**SapientPro\EbayInventorySDK\Models\Compatibility**](../Model/Compatibility.md) | Details of the compatibility                                                                                    |       |
+| **contentLanguage** | **\SapientPro\EbayInventorySDK\Enums\LocaleEnum**                                 | This request header sets the natural language that will be provided in the field values of the request payload. |       |
+| **sku**             | **string**                                                                        | A SKU (stock keeping unit) is an unique identifier defined by a seller for a product                            |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\BaseResponse**](../Model/BaseResponse.md)
+[**SapientPro\EbayInventorySDK\Models\BaseResponse**](../Model/BaseResponse.md)
 
 ### Authorization
 
@@ -68,23 +65,19 @@ Name | Type | Description  | Notes
 # **deleteProductCompatibility**
 > deleteProductCompatibility($sku)
 
-
-
 This call is used by the seller to delete the list of products that are compatible with the inventory item that is associated with the compatible product list. The inventory item is identified with a SKU value in the URI. Product compatibility is currently only applicable to motor vehicle parts and accessory categories, but more categories may be supported in the future.
 
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\ProductCompatibilityApi;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\ProductCompatibilityApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new ProductCompatibilityApi(
+    сonfig: $config
 );
 $sku = "sku_example"; // string | A SKU (stock keeping unit) is an unique identifier defined by a seller for a product
 
@@ -98,9 +91,9 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sku** | **string**| A SKU (stock keeping unit) is an unique identifier defined by a seller for a product |
+| Name    | Type       | Description                                                                          | Notes |
+|---------|------------|--------------------------------------------------------------------------------------|-------|
+| **sku** | **string** | A SKU (stock keeping unit) is an unique identifier defined by a seller for a product |       |
 
 ### Return type
 
@@ -118,7 +111,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../../README.md#documentation-for-api-endpoints) [[Back to Model list]](../../README.md#documentation-for-models) [[Back to README]](../../README.md)
 
 # **getProductCompatibility**
-> \EBay\Inventory\Model\Compatibility getProductCompatibility($sku)
+> SapientPro\EbayInventorySDK\Models\Compatibility getProductCompatibility($sku)
 
 
 
@@ -127,16 +120,15 @@ This call is used by the seller to retrieve the list of products that are compat
 ### Example
 ```php
 <?php
-require_once(__DIR__ . '/vendor/autoload.php');
+use SapientPro\EbayInventorySDK\Configuration;
+use SapientPro\EbayInventorySDK\Api\ProductCompatibilityApi;
+use SapientPro\EbayInventorySDK\Models\Compatibility;
 
 // Configure OAuth2 access token for authorization: api_auth
-$config = EBay\Inventory\Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
+$config = Configuration::getDefaultConfiguration()->setAccessToken('YOUR_ACCESS_TOKEN');
 
-$apiInstance = new EBay\Inventory\Api\ProductCompatibilityApi(
-    // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
-    // This is optional, `GuzzleHttp\Client` will be used as default.
-    new GuzzleHttp\Client(),
-    $config
+$apiInstance = new ProductCompatibilityApi(
+    сonfig: $config
 );
 $sku = "sku_example"; // string | A SKU (stock keeping unit) is an unique identifier defined by a seller for a product
 
@@ -151,13 +143,13 @@ try {
 
 ### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **sku** | **string**| A SKU (stock keeping unit) is an unique identifier defined by a seller for a product |
+| Name    | Type       | Description                                                                          | Notes |
+|---------|------------|--------------------------------------------------------------------------------------|-------|
+| **sku** | **string** | A SKU (stock keeping unit) is an unique identifier defined by a seller for a product |       |
 
 ### Return type
 
-[**\EBay\Inventory\Model\Compatibility**](../Model/Compatibility.md)
+[**SapientPro\EbayInventorySDK\Models\Compatibility**](../Model/Compatibility.md)
 
 ### Authorization
 
